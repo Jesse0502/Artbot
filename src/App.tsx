@@ -1,23 +1,15 @@
-import * as React from "react";
-import {
-  ChakraProvider,
-  Box,
-  Text,
-  VStack,
-  Grid,
-  theme,
-} from "@chakra-ui/react";
+import { ChakraProvider, theme } from "@chakra-ui/react";
 import { ColorModeSwitcher } from "./ColorModeSwitcher";
+import { Provider, connect } from "react-redux";
+import { store } from "./store";
+import Index from "./components";
 
 export const App = () => (
   <ChakraProvider theme={theme}>
-    <Box textAlign="center" fontSize="xl">
-      <Grid minH="100vh" p={3}>
-        <ColorModeSwitcher justifySelf="flex-end" />
-        <VStack spacing={8}>
-          <Text>Hello</Text>
-        </VStack>
-      </Grid>
-    </Box>
+    <Provider store={store}>
+      {/* <ColorModeSwitcher /> */}
+      <ConnectedComponent />
+    </Provider>
   </ChakraProvider>
 );
+const ConnectedComponent = connect()(() => <Index />);
