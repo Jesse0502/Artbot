@@ -1,5 +1,4 @@
-import { Box, Center, Flex, AbsoluteCenter, Button } from "@chakra-ui/react";
-import React from "react";
+import { Center, Flex } from "@chakra-ui/react";
 
 function Navbar(props: any) {
   let { switchTabs, tabs, currTab } = props;
@@ -15,7 +14,6 @@ function Navbar(props: any) {
         overflow={"clip"}
         rounded="3xl"
         bg="white"
-        // color="white"
         shadow="xl"
         w="full"
       >
@@ -27,7 +25,7 @@ function Navbar(props: any) {
             textAlign={"center"}
             w="100%"
           >
-            {currTab.name == t.name ? t.filled : t.icon}
+            {currTab.name === t.name ? t.filled : t.icon}
           </Center>
         ))}
       </Flex>

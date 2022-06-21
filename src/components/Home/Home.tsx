@@ -1,5 +1,5 @@
 import { Box, Center, Text } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import React from "react";
 import { BsFillMicFill } from "react-icons/bs";
 // @ts-ignore
 import sound from "../../assets/click.wav";

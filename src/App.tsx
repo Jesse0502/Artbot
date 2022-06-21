@@ -1,5 +1,5 @@
 import { ChakraProvider, theme } from "@chakra-ui/react";
-import { ColorModeSwitcher } from "./ColorModeSwitcher";
+// import { ColorModeSwitcher } from "./ColorModeSwitcher";
 import { Provider, connect } from "react-redux";
 import { store } from "./store";
 import Index from "./components";

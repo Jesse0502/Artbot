@@ -1,8 +1,7 @@
 import { Box, Flex } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar/Navbar";
 import Home from "./Home/Home";
-import navigationSlice, { setTab } from "../reducers/navigationSlice";
+import { setTab } from "../reducers/navigationSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { AiOutlineHome, AiFillHome } from "react-icons/ai";
 
@@ -30,14 +29,7 @@ function Index() {
 
   const switchTabs = (index: number, name: string) => {
     dispatch(setTab({ index: index, name: name }));
-    console.log();
   };
-  console.log(
-    currTab
-    // currTab.index,
-    // tabs[currTab.index].component,
-    // tabs.find((t: any) => t.index !== currTab.index)
-  );
   return (
     <Flex h="100vh" flexDir="column">
       <Box flex="1" bg="blackAlpha.300">
