@@ -4,7 +4,7 @@ import { BsFillMicFill } from "react-icons/bs";
 // @ts-ignore
 import sound from "../../assets/click.wav";
 import { ReactMic } from "react-mic";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { fetchResponse } from "../../reducers/speechSplice";
 function Home() {
   const [query, setQuery] = React.useState("");
@@ -48,7 +48,10 @@ function Home() {
       };
       respondSpeech();
     }
-    setQuery("");
+    return () => {
+      setQuery("");
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [record]);
 
   recognition.addEventListener("end", (e: any) => {
