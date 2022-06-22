@@ -30,6 +30,7 @@ function Index() {
   const switchTabs = (index: number, name: string) => {
     dispatch(setTab({ index: index, name: name }));
   };
+
   return (
     <Flex h="100vh" flexDir="column">
       <Box flex="1" bg="blackAlpha.300">

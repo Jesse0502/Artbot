@@ -1,0 +1,11 @@
+{
+  "web_apps": [
+    {
+      "manifest": "https://rainbow-monstera-43c103.netlify.app/manifest.json",
+      "details": {
+        "paths": ["*"],
+        "exclude": []
+      }
+    }
+  ]
+}

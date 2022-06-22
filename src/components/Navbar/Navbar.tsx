@@ -19,6 +19,7 @@ function Navbar(props: any) {
       >
         {tabs.map((t: any) => (
           <Center
+            cursor={"pointer"}
             onClick={() => handleSwitch(t)}
             _active={{}}
             alignItems={"center"}
