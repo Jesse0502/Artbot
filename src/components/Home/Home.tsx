@@ -65,11 +65,7 @@ function Home() {
       setQuery("");
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [record, query]);
-
-  recognition.addEventListener("start", (e: Event) => {
-    setRecord(true);
-  });
+  }, [record]);
 
   recognition.addEventListener("end", (e: Event) => {
     setRecord(false);
