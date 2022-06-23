@@ -6,10 +6,25 @@ import sound from "../../assets/click.wav";
 import { ReactMic } from "react-mic";
 import { useDispatch } from "react-redux";
 import { fetchResponse } from "../../reducers/speechSplice";
+
 function Home() {
   const [query, setQuery] = React.useState("");
   const [record, setRecord] = React.useState<boolean>(false);
   const [transcript, setTranscript] = React.useState<string>("");
+  const [location, setLocation] = React.useState<any>(null);
+
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position: any) => {
+          let lat = position.coords.latitude;
+          let lng = position.coords.longitude;
+          setLocation({ lat, lng });
+        },
+        (err: any) => {}
+      );
+    }
+  }, []);
   let dispatch = useDispatch();
   // @ts-ignore
   window.SpeechRecognition =
@@ -25,10 +40,8 @@ function Home() {
 
   useEffect(() => {
     if ("speechSynthesis" in window && query && !record) {
-      console.log(query, record);
       const respondSpeech = async () => {
-        let res = await dispatch(fetchResponse(query));
-        console.log(res.payload);
+        let res = await dispatch(fetchResponse({ query, location }));
         let textToSpeak = `${res.payload.msg}`;
         if (res.payload.link) {
           let a = document.createElement("a");
@@ -39,7 +52,7 @@ function Home() {
 
         let speakData = new SpeechSynthesisUtterance(textToSpeak);
         speakData.volume = 100;
-        speakData.pitch = 1.3;
+        speakData.pitch = 1.1;
 
         // speakData.text = ;
         speakData.lang = "en";
@@ -52,18 +65,36 @@ function Home() {
       setQuery("");
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [record]);
+  }, [record, query]);
 
-  recognition.addEventListener("end", (e: any) => {
+  recognition.addEventListener("start", (e: Event) => {
+    setRecord(true);
+  });
+
+  recognition.addEventListener("end", (e: Event) => {
     setRecord(false);
   });
 
-  const handleOnRecord = () => {
-    let click = new Audio(sound);
-    click.play();
-    if (record) recognition.stop();
-    else recognition.start();
-    setRecord(!record);
+  const handleOnRecord = async () => {
+    if (navigator.onLine) {
+      let click = new Audio(sound);
+      click.volume = 0.6;
+      click.play();
+      if (record) recognition.stop();
+      else recognition.start();
+      setRecord(true);
+    } else {
+      navigator.vibrate([2]);
+      let speakData = new SpeechSynthesisUtterance(
+        "You are currently offline, please connect to the internet!"
+      );
+      speakData.volume = 100;
+      speakData.pitch = 1.1;
+
+      speakData.lang = "en";
+      speakData.voice = speechSynthesis.getVoices()[2];
+      speechSynthesis.speak(speakData);
+    }
   };
 
   return (

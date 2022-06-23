@@ -18,10 +18,10 @@
     }
   },
   "url_handlers": [
-    { "origin": "https://www.youtube.com/" },
-    { "origin": "https://www.google.com/" },
-    { "origin": "https://www.open.spotify.com/" },
-    { "origin": "https://www.spotify.com/" },
+    { "origin": "https://*.com" },
+    { "origin": "https://www.google.com" },
+    { "origin": "https://www.open.spotify.com" },
+    { "origin": "https://www.spotify.com" },
     { "origin": "https://rainbow-monstera-43c103.netlify.app" }
   ]
 }

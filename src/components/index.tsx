@@ -4,9 +4,13 @@ import Home from "./Home/Home";
 import { setTab } from "../reducers/navigationSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { AiOutlineHome, AiFillHome } from "react-icons/ai";
-
+import { useEffect } from "react";
 function Index() {
   const dispatch = useDispatch();
+  useEffect(() => {
+    fetch(`${process.env.REACT_APP_SERVER_URL}`);
+  }, []);
+
   const currTab = useSelector((state: any) => state.nav.tab);
   let size = 32;
   let color = "#5e70b0";

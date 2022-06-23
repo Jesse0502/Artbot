@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+
 const navigationSlice = createSlice({
   name: "nav",
   initialState: { tab: { index: 0, name: "Home" } },

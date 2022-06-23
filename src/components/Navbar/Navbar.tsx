@@ -17,9 +17,9 @@ function Navbar(props: any) {
         shadow="xl"
         w="full"
       >
-        {tabs.map((t: any) => (
+        {tabs.map((t: any, key: number) => (
           <Center
-            cursor={"pointer"}
+            key={key}
             onClick={() => handleSwitch(t)}
             _active={{}}
             alignItems={"center"}
