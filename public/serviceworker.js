@@ -1,8 +1,14 @@
-const CACHE_NAME = "version-1";
-const urlsToCache = ["index.html", "images/logo.png", "static/js/bundle.js"];
+const CACHE_NAME = "version-3";
+const urlsToCache = [
+  "/",
+  "/index.html",
+  "/images/logo.png",
+  "/static/js/bundle.js",
+  "/static/js/index.tsx",
+];
 
 // Install SW
-this.addEventListener("install", (event) => {
+self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       return cache.addAll(urlsToCache);
@@ -10,15 +16,15 @@ this.addEventListener("install", (event) => {
   );
 });
 // Listen for requests
-this.addEventListener("fetch", (event) => {
+self.addEventListener("fetch", (event) => {
   event.respondWith(
-    caches.match(event.request).then(() => {
-      return fetch(event.request).catch(() => caches.match("index.html"));
+    caches.match(event.request).then((cache) => {
+      return cache || fetch(event.request);
     })
   );
 });
 // Activate the SW
-this.addEventListener("activate", (event) => {
+self.addEventListener("activate", (event) => {
   const cacheWhitelist = [];
   cacheWhitelist.push(CACHE_NAME);
   console.log("cache activate", cacheWhitelist);
