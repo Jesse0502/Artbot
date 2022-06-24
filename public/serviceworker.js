@@ -1,10 +1,12 @@
-const CACHE_NAME = "version-3";
+const CACHE_NAME = "version-4";
 const urlsToCache = [
-  "/",
-  "/index.html",
-  "/images/logo.png",
-  "/static/js/bundle.js",
-  "/static/js/index.tsx",
+  ".",
+  "index.html",
+  "images/logo.png",
+  "static/js/bundle.js",
+  "static/js/index.js",
+  "static/js/index.tsx",
+  "manifest.json",
 ];
 
 // Install SW
