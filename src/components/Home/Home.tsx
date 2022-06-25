@@ -12,7 +12,7 @@ function Home() {
   const [record, setRecord] = React.useState<boolean>(false);
   const [transcript, setTranscript] = React.useState<string>("");
   const [location, setLocation] = React.useState<any>(null);
-
+  let synth = window.speechSynthesis;
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -49,14 +49,14 @@ function Home() {
           a.target = "_blank";
           a.click();
         }
+        let speakData = new SpeechSynthesisUtterance();
 
-        let speakData = new SpeechSynthesisUtterance(textToSpeak);
         speakData.volume = 100;
         speakData.pitch = 1.1;
 
-        // speakData.text = ;
+        speakData.text = textToSpeak;
         speakData.lang = "en";
-        speakData.voice = speechSynthesis.getVoices()[2];
+        speakData.voice = speechSynthesis.getVoices()[1];
         speechSynthesis.speak(speakData);
       };
       respondSpeech();
@@ -72,23 +72,25 @@ function Home() {
   });
 
   const handleOnRecord = async () => {
+    synth.cancel();
+    recognition.stop();
+    setRecord(false);
     if (navigator.onLine) {
       let click = new Audio(sound);
       click.volume = 0.6;
       click.play();
-      if (record) recognition.stop();
-      else recognition.start();
+      recognition.start();
       setRecord(true);
     } else {
-      navigator.vibrate([2]);
-      let speakData = new SpeechSynthesisUtterance(
-        "You are currently offline, please connect to the internet!"
-      );
+      navigator.vibrate(400);
+      let speakData = new SpeechSynthesisUtterance();
       speakData.volume = 100;
       speakData.pitch = 1.1;
+      speakData.text =
+        "You are currently offline, please connect to the internet!";
 
       speakData.lang = "en";
-      speakData.voice = speechSynthesis.getVoices()[2];
+      speakData.voice = speechSynthesis.getVoices()[1];
       speechSynthesis.speak(speakData);
     }
   };
