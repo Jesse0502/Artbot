@@ -96,7 +96,7 @@ function Home() {
   };
 
   return (
-    <Center pt="52" overflow={"clip"} flexDir="column">
+    <Center pt="44" overflow={"clip"} flexDir="column">
       <Box
         p="16"
         m="5"

@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const navigationSlice = createSlice({
   name: "nav",
-  initialState: { tab: { index: 0, name: "Home" } },
+  initialState: { tab: { index: 1, name: "Home" } },
   reducers: {
     setTab(state: any, action: any) {
       state.tab = action.payload;

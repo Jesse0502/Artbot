@@ -1,10 +1,14 @@
 import { Box, Flex } from "@chakra-ui/react";
 import Navbar from "./Navbar/Navbar";
 import Home from "./Home/Home";
+import Notes from "./Notes";
+import Notification from "./Notifications";
 import { setTab } from "../reducers/navigationSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { AiOutlineHome, AiFillHome } from "react-icons/ai";
+import { BsCalendar2Check, BsCalendar2CheckFill } from "react-icons/bs";
 import { useEffect } from "react";
+import { IoMdNotifications, IoMdNotificationsOutline } from "react-icons/io";
 function Index() {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -17,18 +21,33 @@ function Index() {
   const tabs = [
     {
       index: 0,
+      name: "Notification",
+      component: <Notification />,
+      filled: <IoMdNotifications size={size + 4} color={color} />,
+      icon: <IoMdNotificationsOutline size={size} color={color} />,
+    },
+    {
+      // AiOutlineHome, AiFillHome
+      index: 1,
       name: "Home",
       component: <Home />,
-      filled: <AiFillHome size={size} color={color} />,
+      filled: <AiFillHome size={size + 4} color={color} />,
       icon: <AiOutlineHome size={size} color={color} />,
     },
     {
-      index: 1,
-      name: "Home2",
-      component: <Home />,
-      filled: <AiFillHome size={size} color={color} />,
-      icon: <AiOutlineHome size={size} color={color} />,
+      index: 2,
+      name: "Notes",
+      component: <Notes />,
+      filled: <BsCalendar2CheckFill size={size - 4} color={color} />,
+      icon: <BsCalendar2Check size={size - 8} color={color} />,
     },
+    // {
+    //   index: 3,
+    //   name: "Profile",
+    //   component: <Profile />,
+    //   filled: <FaUser size={size} color={color} />,
+    //   icon: <FaRegUser size={size} color={color} />,
+    // },
   ];
 
   const switchTabs = (index: number, name: string) => {

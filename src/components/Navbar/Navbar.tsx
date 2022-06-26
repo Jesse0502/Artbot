@@ -6,7 +6,7 @@ function Navbar(props: any) {
     switchTabs(t.index, t.name);
   };
   return (
-    <Flex bg="blackAlpha.300" shadow={"md"}>
+    <Flex bg="blackAlpha.300" justify="center" shadow={"md"}>
       <Flex
         h="20"
         m="3"
@@ -14,8 +14,10 @@ function Navbar(props: any) {
         overflow={"clip"}
         rounded="3xl"
         bg="white"
+        transition="ease"
+        transitionDelay="0.3s"
         shadow="xl"
-        w="full"
+        w={["full", "50vw"]}
       >
         {tabs.map((t: any, key: number) => (
           <Center
