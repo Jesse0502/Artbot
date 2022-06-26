@@ -23,7 +23,7 @@ function Index() {
       index: 0,
       name: "Notification",
       component: <Notification />,
-      filled: <IoMdNotifications size={size + 4} color={color} />,
+      filled: <IoMdNotifications size={size} color={color} />,
       icon: <IoMdNotificationsOutline size={size} color={color} />,
     },
     {
@@ -31,22 +31,22 @@ function Index() {
       index: 1,
       name: "Home",
       component: <Home />,
-      filled: <AiFillHome size={size + 4} color={color} />,
+      filled: <AiFillHome size={size} color={color} />,
       icon: <AiOutlineHome size={size} color={color} />,
     },
     {
       index: 2,
       name: "Notes",
       component: <Notes />,
-      filled: <BsCalendar2CheckFill size={size - 4} color={color} />,
+      filled: <BsCalendar2CheckFill size={size - 8} color={color} />,
       icon: <BsCalendar2Check size={size - 8} color={color} />,
     },
     // {
-    //   index: 3,
-    //   name: "Profile",
-    //   component: <Profile />,
-    //   filled: <FaUser size={size} color={color} />,
-    //   icon: <FaRegUser size={size} color={color} />,
+    //   index: 2,
+    //   name: "Notes",
+    //   component: <ActivityItems />,
+    //   filled: <></>,
+    //   icon: <></>,
     // },
   ];
 

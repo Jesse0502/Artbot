@@ -4,6 +4,7 @@ import { Provider, connect } from "react-redux";
 import { store } from "./store";
 import Index from "./components";
 import OfflineIcon from "./OfflineIcon";
+// @ts-ignore
 
 export const App = () => (
   <ChakraProvider theme={theme}>

@@ -90,7 +90,9 @@ function Home() {
         "You are currently offline, please connect to the internet!";
 
       speakData.lang = "en";
-      speakData.voice = speechSynthesis.getVoices()[1];
+      speakData.voice = speechSynthesis.getVoices()
+        ? speechSynthesis.getVoices()[1]
+        : speechSynthesis.getVoices()[0];
       speechSynthesis.speak(speakData);
     }
   };

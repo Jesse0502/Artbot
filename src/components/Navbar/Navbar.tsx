@@ -9,7 +9,8 @@ function Navbar(props: any) {
     <Flex bg="blackAlpha.300" justify="center" shadow={"md"}>
       <Flex
         h="20"
-        m="3"
+        mx="3"
+        my="3"
         p="5"
         overflow={"clip"}
         rounded="3xl"
