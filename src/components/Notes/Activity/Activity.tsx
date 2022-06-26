@@ -26,7 +26,7 @@ const Activity = (props: propsType) => {
         <Text textAlign="center" fontWeight={"bold"}>
           Tasks{" "}
           <Text opacity="0.6" fontSize="sm">
-            2 items
+            1 item(s)
           </Text>
         </Text>
       </Flex>

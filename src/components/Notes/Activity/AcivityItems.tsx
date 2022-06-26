@@ -55,8 +55,8 @@ const ActivityItems = (props: propsType) => {
               <AiOutlinePlus size={28} />
             </Box>
           </Flex>
-          <Flex flexDir="column" h="96" overflow="auto">
-            {Array.from({ length: 9 }).map(() => (
+          <Flex flexDir="column" h="max" overflow="auto">
+            {Array.from({ length: 1 }).map(() => (
               <Box onClick={() => setIsTask(true)}>
                 <ActivityItem />
               </Box>
