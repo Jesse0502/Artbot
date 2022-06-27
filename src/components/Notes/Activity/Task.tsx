@@ -10,7 +10,7 @@ interface propsType {
 const Task = (props: propsType) => {
   let { setIsTask } = props;
   return (
-    <Box h="100%">
+    <Box h="80%">
       <Flex justify="space-between" alignItems="center">
         <Box flex="3" onClick={() => setIsTask(false)}>
           <Box
@@ -51,7 +51,10 @@ const Task = (props: propsType) => {
           </Text>
         </Flex>
       </Flex>
-      <Flex flexDir="column">
+      <Flex flexDir="column" h="90%" py="3" overflow="auto">
+        <Text fontSize="sm" opacity="0.6" pt="2">
+          Last updated: 20 hours ago
+        </Text>
         <Text py="2">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus id
           necessitatibus aliquid officia maiores doloribus debitis beatae

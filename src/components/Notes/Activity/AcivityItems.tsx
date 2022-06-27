@@ -1,7 +1,7 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
 import React, { Dispatch, SetStateAction, useState } from "react";
-import { AiOutlinePlus } from "react-icons/ai";
 import { BiArrowBack } from "react-icons/bi";
+import AddWorkItem from "../Modals/AddWorkItem";
 import ActivityItem from "./ActivityItem";
 import Task from "./Task";
 interface propsType {
@@ -37,12 +37,11 @@ const ActivityItems = (props: propsType) => {
             >
               Work Items
             </Text>
-            <Box></Box>
           </Flex>
           <Flex
-            onClick={() => setIsTask(true)}
             justify="space-between"
             borderBottom="2px"
+            onClick={() => {}}
             borderColor={"blackAlpha.500"}
             mt="3"
             alignItems="center"
@@ -51,9 +50,9 @@ const ActivityItems = (props: propsType) => {
             <Text fontWeight="bold" fontSize={"lg"}>
               Add Event
             </Text>
-            <Box>
-              <AiOutlinePlus size={28} />
-            </Box>
+            {/* <Box> */}
+            <AddWorkItem />
+            {/* </Box> */}
           </Flex>
           <Flex flexDir="column" h="max" overflow="auto">
             {Array.from({ length: 1 }).map(() => (

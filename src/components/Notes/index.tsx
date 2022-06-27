@@ -2,9 +2,8 @@ import React from "react";
 import { Text, Box, Flex, Heading, Grid } from "@chakra-ui/react";
 import { IoIosSettings } from "react-icons/io";
 import Activity from "./Activity/Activity";
-import { AiOutlinePlus } from "react-icons/ai";
 import ActivityItems from "./Activity/AcivityItems";
-
+import AddActivity from "./Modals/AddActivity";
 const Index = () => {
   const [isActivity, setIsActivity] = React.useState(false);
   return (
@@ -43,19 +42,8 @@ const Index = () => {
                 <Activity setIsActivity={setIsActivity} />
               ))}
             </Grid>
-            <Box
-              pos="absolute"
-              bottom="3"
-              p="4"
-              rounded="full"
-              color="purple.600"
-              bg="purple.50"
-              right="8"
-              shadow="lg"
-              _active={{ bg: "purple.100" }}
-            >
-              <AiOutlinePlus size={32} />
-            </Box>
+
+            <AddActivity />
           </Box>
         )}
       </Flex>

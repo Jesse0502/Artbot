@@ -6,7 +6,7 @@ function Navbar(props: any) {
     switchTabs(t.index, t.name);
   };
   return (
-    <Flex bg="blackAlpha.300" justify="center" shadow={"md"}>
+    <Flex bg="blackAlpha.300" justify="center" shadow={"2xl"}>
       <Flex
         h="20"
         mx="3"
