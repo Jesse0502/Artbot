@@ -1,34 +1,41 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React from "react";
 import { GridItem, Center, Box, Text, Flex } from "@chakra-ui/react";
 import { IoMdNotifications } from "react-icons/io";
-
-interface propsType {
-  setIsActivity: Dispatch<SetStateAction<boolean>>;
-}
-
-const Activity = (props: propsType) => {
-  let { setIsActivity } = props;
+import { BiBook } from "react-icons/bi";
+const Activity = (props: any) => {
+  let { setActivity, i } = props;
   return (
     <GridItem
-      onClick={() => setIsActivity(true)}
+      onClick={() => setActivity(i)}
       rounded="xl"
-      _active={{ bg: "pink.50" }}
+      _active={{ bg: i.type === "Reminders" ? "pink.50" : "blue.50" }}
       bg="white"
       shadow="md"
       maxH="52"
     >
       <Flex flexDir="column" h="44" py="5" rounded="lg" justify="space-around">
         <Center>
-          <Box p="4" rounded="full" bg="pink.100" color="pink.400">
-            <IoMdNotifications size={28} />
+          <Box
+            p="4"
+            rounded="full"
+            bg={i.type === "Reminders" ? "pink.100" : "blue.100"}
+            color={i.type === "Reminders" ? "pink.400" : "blue.400"}
+          >
+            {i.type === "Reminders" ? (
+              <IoMdNotifications size={28} />
+            ) : (
+              <BiBook size={28} />
+            )}
           </Box>
         </Center>
-        <Text textAlign="center" fontWeight={"bold"}>
-          Tasks{" "}
-          <Text opacity="0.6" fontSize="sm">
-            1 item(s)
+        <Flex alignItems="center" flexDir="column">
+          <Text textAlign="center" fontWeight={"bold"} noOfLines={2}>
+            {i.type} Lorem
           </Text>
-        </Text>
+          <Text opacity="0.6" fontSize="sm">
+            {i.items.length} item(s)
+          </Text>
+        </Flex>
       </Flex>
     </GridItem>
   );

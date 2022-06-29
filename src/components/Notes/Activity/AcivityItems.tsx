@@ -1,23 +1,21 @@
 import { Box, Flex, Text } from "@chakra-ui/react";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { useState } from "react";
 import { BiArrowBack } from "react-icons/bi";
 import AddWorkItem from "../Modals/AddWorkItem";
 import ActivityItem from "./ActivityItem";
 import Task from "./Task";
-interface propsType {
-  setIsActivity: Dispatch<SetStateAction<boolean>>;
-}
-const ActivityItems = (props: propsType) => {
-  let { setIsActivity } = props;
-  const [isTask, setIsTask] = useState(false);
+
+const ActivityItems = (props: any) => {
+  let { setActivity, activity } = props;
+  const [task, setTask] = useState<any>(null);
   return (
     <Flex flexDir="column" h="83vh" overflow="auto" p="3">
-      {isTask ? (
-        <Task setIsTask={setIsTask} />
+      {task ? (
+        <Task setTask={setTask} type={activity.type} task={task} />
       ) : (
         <>
           <Flex justify="space-between" alignItems="center">
-            <Box flex="1" onClick={() => setIsActivity(false)}>
+            <Box flex="1" onClick={() => setActivity(null)}>
               <Box
                 p="3"
                 bg="purple.50"
@@ -50,14 +48,12 @@ const ActivityItems = (props: propsType) => {
             <Text fontWeight="bold" fontSize={"lg"}>
               Add Event
             </Text>
-            {/* <Box> */}
-            <AddWorkItem />
-            {/* </Box> */}
+            <AddWorkItem type={activity.type} />
           </Flex>
           <Flex flexDir="column" h="max" overflow="auto">
-            {Array.from({ length: 1 }).map(() => (
-              <Box onClick={() => setIsTask(true)}>
-                <ActivityItem />
+            {activity.items.map((i: any, key: any) => (
+              <Box onClick={() => setTask(i)}>
+                <ActivityItem key={key} i={i} />
               </Box>
             ))}
           </Flex>

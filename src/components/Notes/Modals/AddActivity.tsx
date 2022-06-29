@@ -8,10 +8,10 @@ import {
   ModalCloseButton,
   Button,
   useDisclosure,
-  Box,
   Flex,
   Input,
   Stack,
+  Center,
 } from "@chakra-ui/react";
 import { Radio, RadioGroup } from "@chakra-ui/react";
 import { useFormik } from "formik";
@@ -20,8 +20,8 @@ const AddActivity = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const formik = useFormik({
     initialValues: {
-      title: "",
-      type: "Notes",
+      name: "",
+      type: "Reminder",
     },
     onSubmit: (values) => {
       console.log(values);
@@ -29,7 +29,7 @@ const AddActivity = () => {
   });
   return (
     <>
-      <Box
+      <Center
         pos="absolute"
         bottom="3"
         p="4"
@@ -42,9 +42,9 @@ const AddActivity = () => {
         _active={{ bg: "purple.100" }}
       >
         <AiOutlinePlus size={32} />
-      </Box>
+      </Center>
 
-      <Modal isOpen={isOpen} onClose={onClose}>
+      <Modal isOpen={isOpen} isCentered onClose={onClose}>
         <ModalOverlay />
         <ModalContent w={["90%", "full"]}>
           <ModalHeader>Add Activity</ModalHeader>
@@ -55,13 +55,13 @@ const AddActivity = () => {
                 <label>Name</label>
                 <Input
                   isRequired
-                  placeholder="Add Title (max length: 30)"
+                  placeholder="Add Name (max length: 30)"
                   maxLength={30}
                   onChange={formik.handleChange}
-                  value={formik.values.title}
-                  name="title"
+                  value={formik.values.name}
+                  name="name"
                 />
-                <label>Sub Activity</label>
+                <label>Type</label>
                 <RadioGroup
                   pb="4"
                   onChange={(val: string) =>
@@ -71,7 +71,7 @@ const AddActivity = () => {
                   name="type"
                 >
                   <Stack direction="row">
-                    <Radio value="Task">Task</Radio>
+                    <Radio value="Reminder">Reminder</Radio>
                     <Radio value="Notes">Notes</Radio>
                   </Stack>
                 </RadioGroup>

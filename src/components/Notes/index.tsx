@@ -5,7 +5,7 @@ import Activity from "./Activity/Activity";
 import ActivityItems from "./Activity/AcivityItems";
 import AddActivity from "./Modals/AddActivity";
 const Index = () => {
-  const [isActivity, setIsActivity] = React.useState(false);
+  const [activity, setActivity] = React.useState(false);
   return (
     <>
       <Flex
@@ -15,8 +15,8 @@ const Index = () => {
         overflow="auto"
         pos="relative"
       >
-        {isActivity ? (
-          <ActivityItems setIsActivity={setIsActivity} />
+        {activity ? (
+          <ActivityItems activity={activity} setActivity={setActivity} />
         ) : (
           <Box>
             <Flex px="5" pt="5" alignItems="center" justify="space-between">
@@ -38,8 +38,17 @@ const Index = () => {
               mt="5"
               h="min"
             >
-              {Array.from({ length: 1 }).map(() => (
-                <Activity setIsActivity={setIsActivity} />
+              {[
+                {
+                  type: "Reminders",
+                  items: [
+                    { name: "Demo", status: "Pending" },
+                    { name: "Thursday Task", status: "Done" },
+                  ],
+                },
+                { type: "Notes", items: [{ name: "Note", status: "Note" }] },
+              ].map((i, key) => (
+                <Activity key={key} i={i} setActivity={setActivity} />
               ))}
             </Grid>
 

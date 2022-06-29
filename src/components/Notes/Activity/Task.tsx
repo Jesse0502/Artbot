@@ -1,18 +1,17 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React from "react";
 import { Box, Button, Flex, Text } from "@chakra-ui/react";
 import { BiArrowBack } from "react-icons/bi";
 import { FcOpenedFolder } from "react-icons/fc";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
-interface propsType {
-  setIsTask: Dispatch<SetStateAction<boolean>>;
-}
-const Task = (props: propsType) => {
-  let { setIsTask } = props;
+
+const Task = (props: any) => {
+  let { setTask, task, type } = props;
+  console.log(task);
   return (
     <Box h="80%">
       <Flex justify="space-between" alignItems="center">
-        <Box flex="3" onClick={() => setIsTask(false)}>
+        <Box flex="3" onClick={() => setTask(null)}>
           <Box
             w="min"
             p="3"
@@ -25,11 +24,11 @@ const Task = (props: propsType) => {
           </Box>
         </Box>
         <Text flex={4} textAlign="left" fontWeight="bold" fontSize={"xl"}>
-          Task
+          {type}
         </Text>
       </Flex>
       <Flex
-        onClick={() => setIsTask(true)}
+        onClick={() => setTask(Task)}
         justify="space-between"
         borderBottom="2px"
         borderColor={"blackAlpha.500"}
@@ -39,8 +38,7 @@ const Task = (props: propsType) => {
         px="2"
       >
         <Text fontWeight="bold" fontSize={22} noOfLines={2}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa,
-          aspernatur?
+          {task.name}
         </Text>
         <Flex>
           <Text px="4" fontWeight="bold" fontSize={"lg"}>
@@ -53,35 +51,31 @@ const Task = (props: propsType) => {
       </Flex>
       <Flex flexDir="column" h="90%" py="3" overflow="auto">
         <Text fontSize="sm" opacity="0.6" pt="2">
-          Last updated: 20 hours ago
+          Last updated: {task.updatedAt}
         </Text>
-        <Text py="2">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus id
-          necessitatibus aliquid officia maiores doloribus debitis beatae
-          dolorum sit nulla, possimus illo placeat aperiam quae, fugit, odit
-          numquam sequi obcaecati?
-        </Text>
-        {true && (
+        <Text py="2">{task.description}</Text>
+        {type === "Notes" && (
           <Flex flexDir="column">
-            {[1, 2, 3, 4].map(() => (
-              <Flex
-                p="2"
-                w="36"
-                bg="yellow.300"
-                rounded="lg"
-                shadow="md"
-                my="2"
-                alignItems="center"
-              >
-                <FcOpenedFolder size={32} />
-                <Text noOfLines={1} px="2" fontSize="sm">
-                  Loremipsum.txt{" "}
-                </Text>
-              </Flex>
-            ))}
+            {task.files &&
+              task.files.map(() => (
+                <Flex
+                  p="2"
+                  w="36"
+                  bg="yellow.300"
+                  rounded="lg"
+                  shadow="md"
+                  my="2"
+                  alignItems="center"
+                >
+                  <FcOpenedFolder size={32} />
+                  <Text noOfLines={1} px="2" fontSize="sm">
+                    Loremipsum.txt{" "}
+                  </Text>
+                </Flex>
+              ))}
           </Flex>
         )}
-        {true && (
+        {type === "Reminders" && (
           <Flex py="2">
             <Button bg="green.200" color="green">
               Done

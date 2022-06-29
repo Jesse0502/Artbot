@@ -1,23 +1,23 @@
 import React, { useState } from "react";
 import { Flex, Box, Text } from "@chakra-ui/react";
 import { FiCircle } from "react-icons/fi";
-import useLongPress from "../../Hooks/useLongPress";
 const ActivityItem = (props: any) => {
-  const [showMore, setShowMore] = useState(false);
-  const longPressProps = useLongPress({
-    // @ts-ignore
-    onClick: (ev) => console.log("on click", ev.button, ev.shiftKey),
-    // @ts-ignore
-    onLongPress: (ev) => {
-      navigator.vibrate(100);
-      console.log("on long press");
-      setShowMore(true);
-    },
-  });
+  const [color, setColor] = useState("");
+  let { i } = props;
+
+  React.useEffect(() => {
+    if (i.status === "Pending") {
+      setColor("orange");
+    } else if (i.status === "Done") {
+      setColor("green");
+    } else {
+      setColor("blue");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <Flex shadow="sm">
       <Flex
-        {...longPressProps}
         alignItems="center"
         w="full"
         borderBottom="2px"
@@ -28,16 +28,15 @@ const ActivityItem = (props: any) => {
           flex="2"
           alignItems="center"
           h="full"
-          color="orange"
+          color={color}
           bg="blackAlpha.200"
           textAlign="center"
         >
           <FiCircle size={24} />
         </Flex>
         <Box flex="10" p="5">
-          <Text fontWeight="bold">This is a demo task</Text>
+          <Text fontWeight="bold">{i.name}</Text>
         </Box>
-        {showMore ? <></> : <></>}
       </Flex>
     </Flex>
   );
