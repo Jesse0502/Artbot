@@ -4,8 +4,14 @@ import { IoIosSettings } from "react-icons/io";
 import Activity from "./Activity/Activity";
 import ActivityItems from "./Activity/AcivityItems";
 import AddActivity from "./Modals/AddActivity";
+import { useSelector } from "react-redux";
 const Index = () => {
   const [activity, setActivity] = React.useState(false);
+  const [activities, setActivities] = React.useState([]);
+  let aSelector = useSelector((state: any) => state.activity.activities);
+  React.useEffect(() => {
+    setActivities(aSelector);
+  }, [aSelector]);
   return (
     <>
       <Flex
@@ -38,18 +44,10 @@ const Index = () => {
               mt="5"
               h="min"
             >
-              {[
-                {
-                  type: "Reminders",
-                  items: [
-                    { name: "Demo", status: "Pending" },
-                    { name: "Thursday Task", status: "Done" },
-                  ],
-                },
-                { type: "Notes", items: [{ name: "Note", status: "Note" }] },
-              ].map((i, key) => (
-                <Activity key={key} i={i} setActivity={setActivity} />
-              ))}
+              {activities &&
+                activities.map((i: any, key: number) => (
+                  <Activity key={key} i={i} setActivity={setActivity} />
+                ))}
             </Grid>
 
             <AddActivity />

@@ -17,13 +17,17 @@ import {
 import { Radio, RadioGroup } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import { AiOutlinePlus } from "react-icons/ai";
-const AddWorkItem = (props: any) => {
-  let { type } = props;
+import { editActivity } from "../../../reducers/activitySlice";
+import { useDispatch } from "react-redux";
+
+const AddWorkItem: (props: any) => any = (props: any) => {
+  let { activity, setActivity } = props;
   const { isOpen, onOpen, onClose } = useDisclosure();
+  let dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues:
-      type === "Reminders"
+      activity.type === "Reminder"
         ? {
             name: "",
             description: "",
@@ -36,15 +40,16 @@ const AddWorkItem = (props: any) => {
             files: [],
           },
     onSubmit: (values: any) => {
-      if (type === "Notes") {
+      if (activity.type === "Notes") {
         values = {
           name: values.name,
           description: values.description,
           files: [...values.files],
         };
       }
-
-      console.log(values);
+      dispatch(editActivity({ values, id: activity.id }));
+      setActivity(null);
+      onClose();
     },
   });
   return (
@@ -78,7 +83,7 @@ const AddWorkItem = (props: any) => {
                   name="description"
                 />
                 {/* @ts-ignore */}
-                {type === "Reminders" && (
+                {activity.type === "Reminder" && (
                   <>
                     <label>Due On (date and time):</label>
                     <Input
@@ -104,7 +109,7 @@ const AddWorkItem = (props: any) => {
                     </RadioGroup>
                   </>
                 )}
-                {type === "Notes" && (
+                {activity.type === "Notes" && (
                   <>
                     <label>files</label>
                     <input

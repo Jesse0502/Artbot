@@ -8,7 +8,7 @@ const Activity = (props: any) => {
     <GridItem
       onClick={() => setActivity(i)}
       rounded="xl"
-      _active={{ bg: i.type === "Reminders" ? "pink.50" : "blue.50" }}
+      _active={{ bg: i.type === "Reminder" ? "pink.50" : "blue.50" }}
       bg="white"
       shadow="md"
       maxH="52"
@@ -18,10 +18,10 @@ const Activity = (props: any) => {
           <Box
             p="4"
             rounded="full"
-            bg={i.type === "Reminders" ? "pink.100" : "blue.100"}
-            color={i.type === "Reminders" ? "pink.400" : "blue.400"}
+            bg={i.type === "Reminder" ? "pink.100" : "blue.100"}
+            color={i.type === "Reminder" ? "pink.400" : "blue.400"}
           >
-            {i.type === "Reminders" ? (
+            {i.type === "Reminder" ? (
               <IoMdNotifications size={28} />
             ) : (
               <BiBook size={28} />
@@ -30,7 +30,7 @@ const Activity = (props: any) => {
         </Center>
         <Flex alignItems="center" flexDir="column">
           <Text textAlign="center" fontWeight={"bold"} noOfLines={2}>
-            {i.type} Lorem
+            {i.name}
           </Text>
           <Text opacity="0.6" fontSize="sm">
             {i.items.length} item(s)

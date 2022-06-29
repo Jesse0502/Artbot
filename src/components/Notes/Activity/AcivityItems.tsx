@@ -4,14 +4,27 @@ import { BiArrowBack } from "react-icons/bi";
 import AddWorkItem from "../Modals/AddWorkItem";
 import ActivityItem from "./ActivityItem";
 import Task from "./Task";
-
 const ActivityItems = (props: any) => {
   let { setActivity, activity } = props;
   const [task, setTask] = useState<any>(null);
+  window.onhashchange = function () {
+    setActivity(null);
+  };
+
+  const handleReback = (reback: any) => {
+    // console.log("handleReback");
+    setActivity(null);
+    setActivity(activity);
+  };
   return (
     <Flex flexDir="column" h="83vh" overflow="auto" p="3">
       {task ? (
-        <Task setTask={setTask} type={activity.type} task={task} />
+        <Task
+          setTask={setTask}
+          type={activity.type}
+          task={task}
+          setActivity={setActivity}
+        />
       ) : (
         <>
           <Flex justify="space-between" alignItems="center">
@@ -48,7 +61,11 @@ const ActivityItems = (props: any) => {
             <Text fontWeight="bold" fontSize={"lg"}>
               Add Event
             </Text>
-            <AddWorkItem type={activity.type} />
+            <AddWorkItem
+              activity={activity}
+              handleReback={handleReback}
+              setActivity={setActivity}
+            />
           </Flex>
           <Flex flexDir="column" h="max" overflow="auto">
             {activity.items.map((i: any, key: any) => (

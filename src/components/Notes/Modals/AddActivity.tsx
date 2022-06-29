@@ -16,15 +16,20 @@ import {
 import { Radio, RadioGroup } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import { AiOutlinePlus } from "react-icons/ai";
+import { addActivity } from "../../../reducers/activitySlice";
+import { useDispatch } from "react-redux";
+
 const AddActivity = () => {
+  let dispatch = useDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const formik = useFormik({
+  const formik: any = useFormik({
     initialValues: {
       name: "",
       type: "Reminder",
     },
     onSubmit: (values) => {
-      console.log(values);
+      dispatch(addActivity(values));
+      onClose();
     },
   });
   return (

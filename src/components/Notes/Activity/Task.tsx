@@ -4,10 +4,19 @@ import { BiArrowBack } from "react-icons/bi";
 import { FcOpenedFolder } from "react-icons/fc";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
-
+import { deleteActivity } from "../../../reducers/activitySlice";
+import { useDispatch } from "react-redux";
 const Task = (props: any) => {
-  let { setTask, task, type } = props;
+  let { setTask, task, type, setActivity } = props;
   console.log(task);
+  window.onhashchange = function () {
+    setTask(null);
+  };
+  let dispatch = useDispatch();
+  const handleDelete = () => {
+    dispatch(deleteActivity(task.id));
+    setActivity(null);
+  };
   return (
     <Box h="80%">
       <Flex justify="space-between" alignItems="center">
@@ -44,7 +53,7 @@ const Task = (props: any) => {
           <Text px="4" fontWeight="bold" fontSize={"lg"}>
             <BiEdit size={24} />
           </Text>
-          <Text fontWeight="bold" fontSize={"lg"}>
+          <Text fontWeight="bold" fontSize={"lg"} onClick={handleDelete}>
             <AiFillDelete size={24} />
           </Text>
         </Flex>
@@ -57,10 +66,10 @@ const Task = (props: any) => {
         {type === "Notes" && (
           <Flex flexDir="column">
             {task.files &&
-              task.files.map(() => (
+              task.files.map((t: any) => (
                 <Flex
                   p="2"
-                  w="36"
+                  w="44"
                   bg="yellow.300"
                   rounded="lg"
                   shadow="md"
@@ -69,7 +78,7 @@ const Task = (props: any) => {
                 >
                   <FcOpenedFolder size={32} />
                   <Text noOfLines={1} px="2" fontSize="sm">
-                    Loremipsum.txt{" "}
+                    {t.name}
                   </Text>
                 </Flex>
               ))}
