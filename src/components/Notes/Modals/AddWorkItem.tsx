@@ -12,6 +12,7 @@ import {
   Flex,
   Input,
   Stack,
+  Text,
   Textarea,
 } from "@chakra-ui/react";
 import { Radio, RadioGroup } from "@chakra-ui/react";
@@ -19,9 +20,11 @@ import { useFormik } from "formik";
 import { AiOutlinePlus } from "react-icons/ai";
 import { editActivity } from "../../../reducers/activitySlice";
 import { useDispatch } from "react-redux";
+import { uuidv4 } from "../../../helpers/uuid4";
 
 const AddWorkItem: (props: any) => any = (props: any) => {
   let { activity, setActivity } = props;
+  const [error, setError] = React.useState<string>("");
   const { isOpen, onOpen, onClose } = useDisclosure();
   let dispatch = useDispatch();
 
@@ -30,7 +33,6 @@ const AddWorkItem: (props: any) => any = (props: any) => {
       activity.type === "Reminder"
         ? {
             name: "",
-            description: "",
             dueOn: "",
             status: "Pending",
           }
@@ -47,7 +49,26 @@ const AddWorkItem: (props: any) => any = (props: any) => {
           files: [...values.files],
         };
       }
-      dispatch(editActivity({ values, id: activity.id }));
+      const updatedAt = new Date().toLocaleString();
+      values = {
+        ...values,
+        updatedAt,
+        id: uuidv4().toString(),
+      };
+      let taskExist = activity.items.find((i: any) => i.name === values.name);
+      if (taskExist) {
+        setError("Name already exists!");
+        return;
+      }
+      dispatch(
+        editActivity({
+          activity: {
+            ...activity,
+            updatedAt,
+            items: [values, ...activity.items],
+          },
+        })
+      );
       setActivity(null);
       onClose();
     },
@@ -74,14 +95,7 @@ const AddWorkItem: (props: any) => any = (props: any) => {
                   value={formik.values.name}
                   name="name"
                 />
-                <label>Description</label>
-                <Textarea
-                  isRequired
-                  placeholder="Add Description"
-                  onChange={formik.handleChange}
-                  value={formik.values.description}
-                  name="description"
-                />
+
                 {/* @ts-ignore */}
                 {activity.type === "Reminder" && (
                   <>
@@ -111,6 +125,14 @@ const AddWorkItem: (props: any) => any = (props: any) => {
                 )}
                 {activity.type === "Notes" && (
                   <>
+                    <label>Description</label>
+                    <Textarea
+                      isRequired
+                      placeholder="Add Description"
+                      onChange={formik.handleChange}
+                      value={formik.values.description}
+                      name="description"
+                    />
                     <label>files</label>
                     <input
                       type="file"
@@ -125,6 +147,7 @@ const AddWorkItem: (props: any) => any = (props: any) => {
                     />
                   </>
                 )}
+                {error && <Text color="red">{error}</Text>}
                 <Button type="submit" bg="blue.400" color="white">
                   Submit
                 </Button>

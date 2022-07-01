@@ -17,17 +17,17 @@ const ActivityItems = (props: any) => {
     setActivity(activity);
   };
   return (
-    <Flex flexDir="column" h="83vh" overflow="auto" p="3">
+    <Flex flexDir="column" h="83vh" overflow="auto" pt="5">
       {task ? (
         <Task
           setTask={setTask}
-          type={activity.type}
+          activity={activity}
           task={task}
           setActivity={setActivity}
         />
       ) : (
         <>
-          <Flex justify="space-between" alignItems="center">
+          <Flex px="5" justify="space-between" alignItems="center">
             <Box flex="1" onClick={() => setActivity(null)}>
               <Box
                 p="3"

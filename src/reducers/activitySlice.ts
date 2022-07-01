@@ -1,46 +1,51 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-function uuidv4() {
-  // @ts-ignore
-  return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c) =>
-    (
-      c ^
-      (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))
-    ).toString(16)
-  );
-}
+import { uuidv4 } from "../helpers/uuid4";
 
 const activitySlice = createSlice({
-  name: "nav",
-  initialState: { activities: [] },
+  name: "activity",
+  initialState: {
+    activities: [
+      {
+        id: "1",
+        name: "Blog",
+        updatedAt: new Date().toLocaleString(),
+        type: "Notes",
+        items: [],
+      },
+    ],
+  },
   reducers: {
     addActivity(state: any, action: any) {
       let data = {
         ...action.payload,
-        id: uuidv4(),
+        id: uuidv4().toString(),
         items: [],
+        updatedAt: new Date().toLocaleString(),
       };
-      state.activities.push(data);
+
+      state.activities.unshift(data);
     },
     editActivity(state: any, action: any) {
       let activityExist = state.activities.findIndex(
-        (a: any) => a.id === action.payload.id
+        (a: any) => a.id === action.payload.activity.id
       );
-      if (activityExist !== -1) {
-        state.activities[activityExist].items = [
-          ...state.activities[activityExist].items,
-          { ...action.payload.values, updatedAt: new Date().toLocaleString() },
-        ];
-      }
+      console.log(activityExist, action.payload.activity);
+      if (activityExist !== -1)
+        state.activities[activityExist] = action.payload.activity;
     },
-    deleteActivity(state: any, action: any) {
-      state.activities = state.activities.filter(
-        (i: any) => i.id !== action.payload
+    deleteItem(state: any, action: any) {
+      let activity = state.activities.findIndex(
+        (i: any) => i.id === action.payload.actId
       );
+      if (activity !== -1) {
+        let newState = state.activities[activity].items.filter(
+          (i: any) => i.id !== action.payload.taskId
+        );
+        state.activities[activity].items = newState;
+      }
     },
   },
 });
 
-export const { addActivity, editActivity, deleteActivity } =
-  activitySlice.actions;
+export const { addActivity, editActivity, deleteItem } = activitySlice.actions;
 export default activitySlice.reducer;

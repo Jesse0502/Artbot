@@ -4,21 +4,47 @@ import { BiArrowBack } from "react-icons/bi";
 import { FcOpenedFolder } from "react-icons/fc";
 import { BiEdit } from "react-icons/bi";
 import { AiFillDelete } from "react-icons/ai";
-import { deleteActivity } from "../../../reducers/activitySlice";
+import { deleteItem, editActivity } from "../../../reducers/activitySlice";
 import { useDispatch } from "react-redux";
+import { formatDistanceToNow } from "date-fns";
+
 const Task = (props: any) => {
-  let { setTask, task, type, setActivity } = props;
-  console.log(task);
+  let { setTask, task, setActivity, activity } = props;
   window.onhashchange = function () {
     setTask(null);
   };
+
   let dispatch = useDispatch();
+
   const handleDelete = () => {
-    dispatch(deleteActivity(task.id));
+    setTimeout(() => {
+      dispatch(deleteItem({ actId: activity.id, taskId: task.id }));
+    }, 200);
+    setActivity(null);
+  };
+  const handleDone = () => {
+    dispatch(
+      editActivity({
+        activity: {
+          ...activity,
+          updatedAt: new Date().toLocaleString(),
+          items: activity.items.map((i: any) => {
+            if (i.name === task.name) {
+              return {
+                ...task,
+                status: "Done",
+                updatedAt: new Date().toLocaleString(),
+              };
+            }
+            return i;
+          }),
+        },
+      })
+    );
     setActivity(null);
   };
   return (
-    <Box h="80%">
+    <Box h="80%" px="3">
       <Flex justify="space-between" alignItems="center">
         <Box flex="3" onClick={() => setTask(null)}>
           <Box
@@ -33,7 +59,7 @@ const Task = (props: any) => {
           </Box>
         </Box>
         <Text flex={4} textAlign="left" fontWeight="bold" fontSize={"xl"}>
-          {type}
+          {activity.type}
         </Text>
       </Flex>
       <Flex
@@ -60,10 +86,11 @@ const Task = (props: any) => {
       </Flex>
       <Flex flexDir="column" h="90%" py="3" overflow="auto">
         <Text fontSize="sm" opacity="0.6" pt="2">
-          Last updated: {task.updatedAt}
+          Last updated:{" "}
+          {formatDistanceToNow(new Date(task.updatedAt), { addSuffix: true })}
         </Text>
         <Text py="2">{task.description}</Text>
-        {type === "Notes" && (
+        {activity.type === "Notes" && (
           <Flex flexDir="column">
             {task.files &&
               task.files.map((t: any) => (
@@ -84,8 +111,8 @@ const Task = (props: any) => {
               ))}
           </Flex>
         )}
-        {type === "Reminders" && (
-          <Flex py="2">
+        {activity.type === "Reminder" && task.status === "Pending" && (
+          <Flex py="2" onClick={handleDone}>
             <Button bg="green.200" color="green">
               Done
             </Button>
