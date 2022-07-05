@@ -1,10 +1,22 @@
 import React from "react";
-import { Text, Box, Flex, Heading, Grid } from "@chakra-ui/react";
+import {
+  Text,
+  Box,
+  Flex,
+  Heading,
+  Grid,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+} from "@chakra-ui/react";
 import { IoIosSettings } from "react-icons/io";
 import Activity from "./Activity/Activity";
 import ActivityItems from "./Activity/AcivityItems";
 import AddActivity from "./Modals/AddActivity";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../reducers/authSlice";
+
 const Index = () => {
   const [activity, setActivity] = React.useState(false);
   const [activities, setActivities] = React.useState([]);
@@ -12,6 +24,11 @@ const Index = () => {
   React.useEffect(() => {
     setActivities(aSelector);
   }, [aSelector]);
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(logout(null));
+  };
+
   return (
     <>
       <Flex
@@ -34,7 +51,19 @@ const Index = () => {
                   No incompleted tasks
                 </Text>
               </Box>
-              <IoIosSettings size={32} />
+              <Menu>
+                {({ isOpen }) => (
+                  <>
+                    <MenuButton rounded="full">
+                      <IoIosSettings size={32} />
+                      {/* {isOpen ? "Close" : "Open"} */}
+                    </MenuButton>
+                    <MenuList>
+                      <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                    </MenuList>
+                  </>
+                )}
+              </Menu>
             </Flex>
             <Grid
               overflow="auto"

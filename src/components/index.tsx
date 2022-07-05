@@ -21,17 +21,10 @@ function Index() {
   let currTab = useSelector((state: any) => state.nav.tab);
 
   useEffect(() => {
-    // if (!isAuthenticated) {
-    //   currTab = {
-    //     index: 0,
-    //     name: "Home",
-    //   };
-    // }
     fetch(`${process.env.REACT_APP_SERVER_URL}`);
     dispatch(checkAuth(null));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   let size = 32;
   let color = "#5e70b0";
   const tabs = isAuthenticated

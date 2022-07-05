@@ -1,22 +1,46 @@
-import React from "react";
-import { Box, Text, Flex, Input, Button } from "@chakra-ui/react";
+import React, { useState } from "react";
+import { Box, Text, Flex, Input, Button, useToast } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import { handleLogin } from "../../reducers/authSlice";
 import { setTab } from "../../reducers/navigationSlice";
 import { useDispatch } from "react-redux";
 
 const Login = (props: any) => {
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   let { handleChooseSignin } = props;
+  const toast = useToast();
   const formik = useFormik({
     initialValues: {
-      email: "",
+      username: "",
       password: "",
     },
-    onSubmit: (values: any) => {
-      console.log(values);
-      dispatch(handleLogin(null));
+    onSubmit: async (values: any) => {
+      setLoading(true);
+      const res = await dispatch(handleLogin(values));
+      console.log(res);
+      if (res.payload.data.msg.includes("incorrect")) {
+        setLoading(false);
+        toast({
+          title: "Incorrect username or password",
+          description: "Please try again.",
+          duration: 2000,
+          status: "error",
+          position: "bottom-right",
+        });
+        return;
+      }
+      // if (res.type === "handleLogin/fulfilled" && res.payload.data.token) {
+      toast({
+        title: "Logged in successfully",
+        description: "You're now logged in successfully",
+        duration: 2000,
+        status: "success",
+        position: "bottom-right",
+      });
       dispatch(setTab({ index: 1, name: "Home" }));
+      // }
+      setLoading(false);
     },
   });
   return (
@@ -26,13 +50,13 @@ const Login = (props: any) => {
       </Text>
       <form onSubmit={formik.handleSubmit}>
         <Flex gap={2} flexDir="column">
-          <label>Email</label>
+          <label>Username</label>
           <Input
             isRequired
-            placeholder="Enter your email"
+            placeholder="Enter your username"
             onChange={formik.handleChange}
-            value={formik.values.email}
-            name="email"
+            value={formik.values.username}
+            name="username"
           />
           <label>Password</label>
           <Input
@@ -45,6 +69,7 @@ const Login = (props: any) => {
           />
 
           <Button
+            isLoading={loading}
             _active={{}}
             _hover={{}}
             type="submit"

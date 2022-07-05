@@ -1,18 +1,57 @@
-import React from "react";
-import { Box, Text, Flex, Input, Button } from "@chakra-ui/react";
+import React, { useState } from "react";
+import { Box, Text, Flex, Input, Button, useToast } from "@chakra-ui/react";
 import { useFormik } from "formik";
-
+import { useDispatch } from "react-redux";
+import { handleSignup } from "../../reducers/authSlice";
 const Signup = (props: any) => {
   let { handleChooseSignin } = props;
+  const toast = useToast();
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
   const formik = useFormik({
     initialValues: {
-      name: "",
-      email: "",
+      username: "",
       password: "",
       confirmPassword: "",
     },
-    onSubmit: (values: any) => {
-      console.log(values);
+    onSubmit: async (values: any) => {
+      setLoading(true);
+      let res = await dispatch(handleSignup(values));
+      if (!res.type.includes("fulfilled")) {
+        setLoading(false);
+        toast({
+          title: "Some unexpected error occurred!",
+          description: "Please try again.",
+          duration: 3000,
+          status: "error",
+          position: "bottom-right",
+        });
+        return;
+      }
+
+      if (
+        res.payload.data.msg.includes("exists") ||
+        res.payload.data.msg.includes("match")
+      ) {
+        toast({
+          title: "Error",
+          description: res.payload.data.msg,
+          duration: 3000,
+          status: "error",
+          position: "bottom-right",
+        });
+        setLoading(false);
+        return;
+      }
+      toast({
+        title: "Signup was successful!",
+        description: res.payload.data.msg,
+        duration: 3000,
+        status: "success",
+        position: "bottom-right",
+      });
+      setLoading(false);
+      return;
     },
   });
   return (
@@ -22,22 +61,15 @@ const Signup = (props: any) => {
       </Text>
       <form onSubmit={formik.handleSubmit}>
         <Flex gap={2} flexDir="column">
-          <label>Name</label>
+          <label>Username</label>
           <Input
             isRequired
-            placeholder="Enter your name"
+            placeholder="Enter your username"
             onChange={formik.handleChange}
-            value={formik.values.name}
-            name="name"
+            value={formik.values.username}
+            name="username"
           />
-          <label>Email</label>
-          <Input
-            isRequired
-            placeholder="Enter your email"
-            onChange={formik.handleChange}
-            value={formik.values.email}
-            name="email"
-          />
+
           <label>Password</label>
           <Input
             isRequired
@@ -58,6 +90,7 @@ const Signup = (props: any) => {
           />
 
           <Button
+            isLoading={loading}
             _active={{}}
             _hover={{}}
             type="submit"

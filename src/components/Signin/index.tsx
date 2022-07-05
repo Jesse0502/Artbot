@@ -21,10 +21,10 @@ const Signin = () => {
       <Flex
         flexDir="column"
         h={"max"}
-        shadow="md"
+        // shadow="md"
         bg="white"
         color="black"
-        w={["72", "96"]}
+        w={["90%", "96"]}
         rounded="lg"
         p="5"
       >

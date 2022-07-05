@@ -6,6 +6,7 @@ import sound from "../../assets/click.wav";
 import { ReactMic } from "react-mic";
 import { useDispatch } from "react-redux";
 import { fetchResponse } from "../../reducers/speechSplice";
+import OfflineIcon from "../../OfflineIcon";
 
 function Home() {
   const [query, setQuery] = React.useState("");
@@ -99,6 +100,8 @@ function Home() {
 
   return (
     <Center pt="44" overflow={"clip"} flexDir="column">
+      <OfflineIcon />
+
       <Box
         p="16"
         m="5"

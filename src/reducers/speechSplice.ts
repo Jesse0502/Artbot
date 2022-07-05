@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-
 export const fetchResponse: any = createAsyncThunk(
   "speech/fetchResponse",
   async (args: any) => {
@@ -7,7 +6,9 @@ export const fetchResponse: any = createAsyncThunk(
     let query = args.query;
     let location = args.location;
     const response = await fetch(
-      `${process.env.REACT_APP_API_ROOT}/speech?speech=${query}&loc=${location?.lat},${location?.lng}`
+      `${process.env.REACT_APP_API_ROOT}/speech?speech=${query}&loc=${
+        location?.lat
+      },${location?.lng}&token=${localStorage.getItem("art-token")}`
     )
       .then(async (res) => {
         if (res.ok) {

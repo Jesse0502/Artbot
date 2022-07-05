@@ -11,9 +11,11 @@ function OfflineIcon() {
     }, 200);
   }, [counter]);
   return (
-    <Box pos="absolute" top="4" left="4" color="red">
-      {!isOnline && <BsWifiOff size={24} />}
-    </Box>
+    <>
+      <Box pos="absolute" top="4" left="4" color="red">
+        {!isOnline && <BsWifiOff size={24} />}
+      </Box>
+    </>
   );
 }
 
