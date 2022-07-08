@@ -26,7 +26,7 @@ const Login = (props: any) => {
           description: "Please try again.",
           duration: 2000,
           status: "error",
-          position: "bottom-right",
+          position: "top-right",
         });
         return;
       }
@@ -36,7 +36,7 @@ const Login = (props: any) => {
         description: "You're now logged in successfully",
         duration: 2000,
         status: "success",
-        position: "bottom-right",
+        position: "top-right",
       });
       dispatch(setTab({ index: 1, name: "Home" }));
       // }

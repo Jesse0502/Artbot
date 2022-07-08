@@ -48,7 +48,7 @@ const Signup = (props: any) => {
         description: res.payload.data.msg,
         duration: 3000,
         status: "success",
-        position: "bottom-right",
+        position: "top-right",
       });
       setLoading(false);
       return;
