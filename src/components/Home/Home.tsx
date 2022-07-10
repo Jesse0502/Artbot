@@ -1,4 +1,4 @@
-import { Box, Center, Text } from "@chakra-ui/react";
+import { Box, Center, Text, Spinner } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { BsFillMicFill } from "react-icons/bs";
 // @ts-ignore
@@ -7,12 +7,15 @@ import { ReactMic } from "react-mic";
 import { useDispatch } from "react-redux";
 import { fetchResponse } from "../../reducers/speechSplice";
 import OfflineIcon from "../../OfflineIcon";
+import Session from "./Session";
 
 function Home() {
   const [query, setQuery] = React.useState("");
   const [record, setRecord] = React.useState<boolean>(false);
   const [transcript, setTranscript] = React.useState<string>("");
   const [location, setLocation] = React.useState<any>(null);
+  const [session, setSession] = React.useState<any>(null);
+  const [loading, setLoading] = React.useState<boolean>(false);
   let synth = window.speechSynthesis;
   useEffect(() => {
     if (navigator.geolocation) {
@@ -42,13 +45,18 @@ function Home() {
   useEffect(() => {
     if ("speechSynthesis" in window && query && !record) {
       const respondSpeech = async () => {
+        setLoading(true);
         let res = await dispatch(fetchResponse({ query, location }));
+        setLoading(false);
         let textToSpeak = `${res.payload.msg}`;
         if (res.payload.link) {
           let a = document.createElement("a");
           a.href = res.payload.link;
           a.target = "_blank";
           a.click();
+        }
+        if (res.payload.session) {
+          setSession(res.payload.session);
         }
         let speakData = new SpeechSynthesisUtterance();
 
@@ -101,32 +109,41 @@ function Home() {
   return (
     <Center pt="44" overflow={"clip"} flexDir="column">
       <OfflineIcon />
-
-      <Box
-        p="16"
-        m="5"
-        shadow={!record ? "lg" : "none"}
-        rounded="full"
-        onClick={handleOnRecord}
-      >
-        {!record && <BsFillMicFill size={72} color={"#5e70b0"} />}
-        <Center
-          textAlign={"center"}
-          display={!record ? "none" : "block"}
-          w="80"
-          maxW="full"
-          overflow={"clip"}
-        >
-          <ReactMic
-            record={record}
-            strokeColor="white"
-            backgroundColor="#d6d6d6"
-          />
-        </Center>
-      </Box>
-      <Text id="transcript" fontSize={20} color="blackAlpha.600">
-        {transcript}
-      </Text>
+      {loading && (
+        <Box pos="absolute" top="3" right="3">
+          <Spinner />
+        </Box>
+      )}
+      {!session && (
+        <>
+          <Box
+            p="16"
+            m="5"
+            shadow={!record ? "lg" : "none"}
+            rounded="full"
+            onClick={handleOnRecord}
+          >
+            {!record && <BsFillMicFill size={72} color={"#5e70b0"} />}
+            <Center
+              textAlign={"center"}
+              display={!record ? "none" : "block"}
+              w="80"
+              maxW="full"
+              overflow={"clip"}
+            >
+              <ReactMic
+                record={record}
+                strokeColor="white"
+                backgroundColor="#d6d6d6"
+              />
+            </Center>
+          </Box>
+          <Text id="transcript" fontSize={20} color="blackAlpha.600">
+            {transcript}
+          </Text>
+        </>
+      )}
+      {session && <Session session={session} setSession={setSession} />}
     </Center>
   );
 }
