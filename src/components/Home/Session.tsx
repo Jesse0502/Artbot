@@ -40,9 +40,9 @@ const Session = (props: any) => {
     }
   };
 
-//   const endSession = () => {
-//     onOpen();
-//   };
+  //   const endSession = () => {
+  //     onOpen();
+  //   };
   const { isOpen, onOpen, onClose } = useDisclosure();
   const buttonProps: ChakraProps = {
     rounded: "full",
@@ -55,8 +55,14 @@ const Session = (props: any) => {
     // borderColor: "black",
   };
   return (
-    <Center flexDir="column" alignItems="center" mt="-20">
-      <Box pos="absolute" top="3" onClick={() => setSession(null)} right="5">
+    <Center flexDir="column" alignItems="center" mt="-5">
+      <Box
+        pos="absolute"
+        top="4"
+        fontWeight="bold"
+        onClick={() => setSession(null)}
+        right="5"
+      >
         End Session
       </Box>
       <Center
@@ -66,11 +72,11 @@ const Session = (props: any) => {
         isLoading={loading}
         // _active={{}}
         // _hover={{}}
-        w="72"
+        w="96"
         h="80"
       >
         <Image
-          maxW="72"
+          maxW="96"
           maxH="80"
           shadow="md"
           objectFit="contain"
@@ -80,7 +86,7 @@ const Session = (props: any) => {
           src={currentMeme}
         />
       </Center>
-      <Flex justify="space-around" w="full" my="5">
+      <Flex justify="space-around" w="80%" mt="7">
         <Button {...buttonProps} onClick={prevMeme} isDisabled={count <= 0}>
           <FaStepBackward size={28} />
         </Button>
