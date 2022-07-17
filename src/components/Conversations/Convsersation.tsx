@@ -60,13 +60,11 @@ const Conversation = (props: any) => {
           {/* <Text>{conv.recieve_time.toLocaleTimeString()}</Text> */}
         </Flex>
 
-        <Text ml="60vh">
+        <Text ml={["5vh", "60vh"]}>
           {conv.query ?? (
-            <>
-              <Text fontStyle="italic" color="gray">
-                Failed to fetch data
-              </Text>
-            </>
+            <Text fontStyle="italic" color="gray">
+              Failed to fetch data
+            </Text>
           )}
         </Text>
       </Flex>
