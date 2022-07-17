@@ -4,12 +4,12 @@ import { BsFillMicFill } from "react-icons/bs";
 // @ts-ignore
 import sound from "../../assets/click.wav";
 import { ReactMic } from "react-mic";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { fetchResponse } from "../../reducers/speechSplice";
 import { logout } from "../../reducers/authSlice";
 import OfflineIcon from "../../OfflineIcon";
 import Session from "./Session";
-import {FiLogOut} from 'react-icons/fi'
+import { FiLogOut } from "react-icons/fi";
 
 function Home() {
   const [query, setQuery] = React.useState("");
@@ -18,6 +18,9 @@ function Home() {
   const [location, setLocation] = React.useState<any>(null);
   const [session, setSession] = React.useState<any>(null);
   const [loading, setLoading] = React.useState<boolean>(false);
+  const isAuthenticated = useSelector(
+    (state: any) => state.auth.isAuthenticated
+  );
   let synth = window.speechSynthesis;
   useEffect(() => {
     if (navigator.geolocation) {
@@ -51,16 +54,17 @@ function Home() {
         let res = await dispatch(
           fetchResponse({ query, location, uid: Math.random() * 10 })
         );
+        console.log(res);
         setLoading(false);
-        let textToSpeak = `${res.payload.msg}`;
-        if (res.payload.link) {
+        let textToSpeak = `${res.payload.response.msg}`;
+        if (res.payload.response.link) {
           let a = document.createElement("a");
-          a.href = res.payload.link;
+          a.href = res.payload.response.link;
           a.target = "_blank";
           a.click();
         }
-        if (res.payload.session) {
-          setSession(res.payload.session);
+        if (res.payload.response.session) {
+          setSession(res.payload.response.session);
         }
         let speakData = new SpeechSynthesisUtterance();
 
@@ -124,9 +128,11 @@ function Home() {
       )}
       {!session && (
         <>
-          <Box pos="absolute" top="4" right="4" onClick={handleLogout}>
-            <FiLogOut size={24}/>
-          </Box>
+          {isAuthenticated && (
+            <Box pos="absolute" top="4" right="4" onClick={handleLogout}>
+              <FiLogOut size={24} />
+            </Box>
+          )}
           <Box
             p="16"
             m="5"

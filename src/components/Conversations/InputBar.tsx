@@ -35,6 +35,7 @@ const InputBar = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    if (!query) return;
     setQuery("");
 
     let uid = Math.random() * 10;

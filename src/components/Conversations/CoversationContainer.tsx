@@ -15,20 +15,47 @@ interface propTypes {
 }
 
 const CoversationContainer = (props: propTypes) => {
-  const dispatch = useDispatch();
   const { conversations } = props;
+
+  const dispatch = useDispatch();
+  const [loading, setLoading] = React.useState(false);
+  const scrollRef = React.useRef();
+  // const [scrollTop, setscrollTop] = React.useState(0);
+
   const handleScroll = (e: any) => {
-    const currPos = e.currentTarget.scrollTop;
-    if (currPos === 0) {
-      dispatch(fetchResponses(conversations.length + 10));
+    const currPos = Math.abs(
+      // @ts-ignore
+      Math.abs(Math.ceil(e.currentTarget.scrollTop)) +
+        // @ts-ignore
+        scrollRef.current.clientHeight
+    );
+    // setscrollTop(currPos);
+    // @ts-ignore
+    const clientH = scrollRef.current.scrollHeight;
+    if (+currPos + 5 >= +clientH) {
+      setLoading(true);
+      setTimeout(() => {
+        dispatch(fetchResponses(conversations.length + 10));
+        setLoading(false);
+      }, 200);
     }
   };
-  const scrollRef = React.useRef();
+
   React.useEffect(() => {
-    console.log(conversations.length);
+    // const currPos = Math.abs(
+    //   // @ts-ignore
+    //   Math.abs(Math.ceil(scrollTop)) +
+    //     // @ts-ignore
+    //     scrollRef.current.clientHeight
+    // );
+    // // @ts-ignore
+    // const clientH = scrollRef.current.scrollHeight;
+    // if (+currPos >= +clientH) {
     // @ts-ignore
-    scrollRef.current.scrollTop = 99999 * 99999;
-  }, [conversations]);
+    scrollRef.current.scrollTop = 0;
+    // }
+  }, [conversations.length]);
+
   return (
     <>
       <Flex
@@ -40,18 +67,33 @@ const CoversationContainer = (props: propTypes) => {
         pb="20"
         scrollBehavior={"smooth"}
         onScroll={handleScroll}
+        css={{
+          "&::-webkit-scrollbar": {
+            width: "4px",
+          },
+          "&::-webkit-scrollbar-track": {
+            width: "6px",
+          },
+          "&::-webkit-scrollbar-thumb": {
+            // borderColor: "red",
+            borderRadius: "24px",
+          },
+        }}
       >
         {conversations.map((conv, idx) => (
           <Conversation length={conversations.length} conv={conv} key={idx} />
         ))}
-        <Center my="5">
-          <CircularProgress
-            color="#5e70b0"
-            size="10"
-            thickness={"lg"}
-            isIndeterminate
-          />
-        </Center>
+        {loading && (
+          <Center my="5">
+            <Flex mx="3">Fetching conversations</Flex>
+            <CircularProgress
+              color="#5e70b0"
+              size="5"
+              thickness={"10"}
+              isIndeterminate
+            />
+          </Center>
+        )}
       </Flex>
     </>
   );

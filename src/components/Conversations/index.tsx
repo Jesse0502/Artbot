@@ -17,7 +17,7 @@ const Index = () => {
       <Flex
         flexDir="column"
         fontFamily="body"
-        h="83vh"
+        h={["87vh", "83vh"]}
         overflow="auto"
         pos="relative"
       >
