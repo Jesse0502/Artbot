@@ -6,8 +6,10 @@ import sound from "../../assets/click.wav";
 import { ReactMic } from "react-mic";
 import { useDispatch } from "react-redux";
 import { fetchResponse } from "../../reducers/speechSplice";
+import { logout } from "../../reducers/authSlice";
 import OfflineIcon from "../../OfflineIcon";
 import Session from "./Session";
+import {FiLogOut} from 'react-icons/fi'
 
 function Home() {
   const [query, setQuery] = React.useState("");
@@ -46,7 +48,9 @@ function Home() {
     if ("speechSynthesis" in window && query && !record) {
       const respondSpeech = async () => {
         setLoading(true);
-        let res = await dispatch(fetchResponse({ query, location, uid: Math.random() * 10 }));
+        let res = await dispatch(
+          fetchResponse({ query, location, uid: Math.random() * 10 })
+        );
         setLoading(false);
         let textToSpeak = `${res.payload.msg}`;
         if (res.payload.link) {
@@ -106,6 +110,10 @@ function Home() {
     }
   };
 
+  const handleLogout = () => {
+    dispatch(logout(null));
+  };
+
   return (
     <Center pt="44" overflow={"clip"} flexDir="column">
       <OfflineIcon />
@@ -116,6 +124,9 @@ function Home() {
       )}
       {!session && (
         <>
+          <Box pos="absolute" top="4" right="4" onClick={handleLogout}>
+            <FiLogOut size={24}/>
+          </Box>
           <Box
             p="16"
             m="5"
