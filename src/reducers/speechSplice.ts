@@ -1,10 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 export const fetchResponse: any = createAsyncThunk(
   "speech/fetchResponse",
   async (args: any) => {
     console.log(args);
     let query = args.query;
     let location = args.location;
+    let uid = args.uid;
     const response = await fetch(
       `${process.env.REACT_APP_API_ROOT}/speech?speech=${query}&loc=${
         location?.lat
@@ -24,22 +26,64 @@ export const fetchResponse: any = createAsyncThunk(
         return result;
       });
     if (!response) return "Some error occurred!";
-    return response;
+    return { response, queryId: uid };
+  }
+);
+
+export const fetchResponses: any = createAsyncThunk(
+  "speech/getResponses",
+  async (length: number) => {
+    const response = await axios.post(
+      `${process.env.REACT_APP_API_ROOT}/user/getResponses?len=${length}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("art-token")}`,
+        },
+      }
+    );
+
+    if (response.status !== 200) return "Some error occurred!";
+    console.log(response);
+    return { response: response.data };
   }
 );
 
 const speechSlice = createSlice({
   name: "speech",
-  initialState: { response: "" },
+  initialState: { response: "", responses: [] },
   reducers: {
-    someState: (state: any, action: any) => {},
+    addQuery: (state: any, action: any) => {
+      state.responses.unshift({
+        query: action.payload.query,
+        recieve_time: new Date(),
+        queryId: action.payload.uid,
+      });
+    },
   },
   extraReducers: async (builder) => {
-    builder.addCase(fetchResponse.fulfilled, (state, action) => {
-      state.response = action.payload;
+    builder.addCase(fetchResponse.fulfilled, (state: any, action: any) => {
+      state.response = action.payload.response;
+      let newResp = state.responses.map((resp: any) => {
+        if (
+          resp.hasOwnProperty("queryId") &&
+          resp.queryId === action.payload.queryId
+        ) {
+          return {
+            ...resp,
+            response: action.payload.response.msg,
+            response_time: new Date(),
+          };
+        }
+        return resp;
+      });
+      state.responses = newResp;
+    });
+    builder.addCase(fetchResponses.fulfilled, (state: any, action: any) => {
+      state.responses = action.payload.response.data;
     });
   },
 });
 
-export const { someState } = speechSlice.actions;
+export const { addQuery } = speechSlice.actions;
 export default speechSlice.reducer;

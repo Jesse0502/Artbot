@@ -3,6 +3,7 @@ import {
   Box,
   Flex,
   Link,
+  Text,
   Image,
   Center,
   Button,
@@ -105,7 +106,7 @@ const Session = (props: any) => {
             <AlertDialogContent w="90%">
               <AlertDialogHeader>
                 <Flex justify="space-between">
-                  <Box>{session[count].title}</Box>
+                  <Text noOfLines={1}>{session[count].title}</Text>
                   <Box onClick={() => onClose()}>
                     <AiOutlineClose />
                   </Box>

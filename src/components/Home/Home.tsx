@@ -46,7 +46,7 @@ function Home() {
     if ("speechSynthesis" in window && query && !record) {
       const respondSpeech = async () => {
         setLoading(true);
-        let res = await dispatch(fetchResponse({ query, location }));
+        let res = await dispatch(fetchResponse({ query, location, uid: Math.random() * 10 }));
         setLoading(false);
         let textToSpeak = `${res.payload.msg}`;
         if (res.payload.link) {

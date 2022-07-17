@@ -1,16 +1,17 @@
 import { Box, Flex } from "@chakra-ui/react";
 import Navbar from "./Navbar/Navbar";
 import Home from "./Home/Home";
-import Notes from "./Notes";
+import Conversation from "./Conversations";
 import Notification from "./Notifications";
 import { setTab } from "../reducers/navigationSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { AiOutlineHome, AiFillHome } from "react-icons/ai";
-import { BsCalendar2Check, BsCalendar2CheckFill } from "react-icons/bs";
+import { BsChatTextFill, BsChatText } from "react-icons/bs";
 import { useEffect } from "react";
 import { IoMdNotifications, IoMdNotificationsOutline } from "react-icons/io";
 import { checkAuth } from "../reducers/authSlice";
 import { RiUserLocationFill, RiUserLocationLine } from "react-icons/ri";
+import { fetchResponses } from "../reducers/speechSplice";
 
 import Signin from "./Signin/index";
 function Index() {
@@ -19,10 +20,13 @@ function Index() {
     (state: any) => state.auth.isAuthenticated
   );
   let currTab = useSelector((state: any) => state.nav.tab);
+  let responses = useSelector((state: any) => state.speech.responses);
 
   useEffect(() => {
     fetch(`${process.env.REACT_APP_SERVER_URL}`);
+    dispatch(fetchResponses(responses.length + 10));
     dispatch(checkAuth(null));
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   let size = 32;
@@ -44,11 +48,12 @@ function Index() {
           icon: <AiOutlineHome size={size} color={color} />,
         },
         {
+          // BsChatTextFill, BsChatText
           index: 2,
           name: "Notes",
-          component: <Notes />,
-          filled: <BsCalendar2CheckFill size={size - 8} color={color} />,
-          icon: <BsCalendar2Check size={size - 8} color={color} />,
+          component: <Conversation />,
+          filled: <BsChatTextFill size={size - 8} color={color} />,
+          icon: <BsChatText size={size - 8} color={color} />,
         },
       ]
     : [
@@ -73,7 +78,7 @@ function Index() {
   };
 
   return (
-    <Flex h="100vh" flexDir="column">
+    <Flex h="100vh" overflow="clip" flexDir="column">
       <Box flex="1" bg="blackAlpha.300">
         {tabs[currTab.index].component}
       </Box>
