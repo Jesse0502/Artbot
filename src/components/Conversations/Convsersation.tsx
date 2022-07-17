@@ -1,8 +1,8 @@
 import React from "react";
-import { Flex, Box, Heading, Text, Avatar } from "@chakra-ui/react";
-import { FaRobot } from "react-icons/fa";
+import { Flex, Text, Avatar } from "@chakra-ui/react";
+// import { FaRobot } from "react-icons/fa";
 import logo from "../../assets/logo.png";
-import { BsDot } from "react-icons/bs";
+// import { BsDot } from "react-icons/bs";
 
 // interface responseInterface {}
 

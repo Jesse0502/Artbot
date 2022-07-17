@@ -8,7 +8,7 @@ import {
   Center,
 } from "@chakra-ui/react";
 import { RiSendPlane2Fill } from "react-icons/ri";
-import { MdOutlineExpandLess, MdOutlineExpandMore } from "react-icons/md";
+import { MdOutlineExpandLess } from "react-icons/md";
 import { BsKeyboard } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 // import {fetchResponse} from '../../'
