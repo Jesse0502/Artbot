@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Flex, Box } from "@chakra-ui/react";
 // import { useDispatch } from "react-redux";
 // import { logout } from "../../reducers/authSlice";
 import ConversationContainer from "./CoversationContainer";
 import { BiVolumeMute } from "react-icons/bi";
 import InputBar from "./InputBar";
-import {useSelector, useDispatch} from 'react-redux'
-import {fetchResponses} from '../../reducers/speechSplice'
+import { useSelector } from "react-redux";
+// import {fetchResponses} from '../../reducers/speechSplice'
 const Index = () => {
   // const dispatch = useDispatch();
   const [speak, setSpeak] = useState(false);
-  const responses = useSelector((state: any) => state.speech.responses)
+  const responses = useSelector((state: any) => state.speech.responses);
 
   return (
     <>
@@ -35,11 +35,7 @@ const Index = () => {
         >
           <BiVolumeMute size={22} />
         </Box>
-        <ConversationContainer
-          conversations={
-            responses  
-        }
-        />
+        <ConversationContainer conversations={responses} />
         <InputBar />
       </Flex>
     </>
