@@ -18,6 +18,7 @@ function Home() {
   const [location, setLocation] = React.useState<any>(null);
   const [session, setSession] = React.useState<any>(null);
   const [loading, setLoading] = React.useState<boolean>(false);
+  const [recognition, setRecognition] = React.useState<any>(null);
   const isAuthenticated = useSelector(
     (state: any) => state.auth.isAuthenticated
   );
@@ -33,19 +34,24 @@ function Home() {
         (err: any) => {}
       );
     }
+    if (navigator.userAgent.match(/chrome|chromium|crios/i)) {
+      // @ts-ignore
+      window.SpeechRecognition =
+        // @ts-ignore
+        window.SpeechRecognition || window.webkitSpeechRecognition;
+      let recognition =
+        // @ts-ignore
+        window.speechRecognition || window.webkitSpeechRecognition;
+      recognition = new recognition();
+      recognition.interimResults = true;
+      setRecognition(recognition);
+      recognition.addEventListener("result", (e: any) => {
+        setQuery(e.results[0][0].transcript);
+        setTranscript(e.results[0][0].transcript);
+      });
+    }
   }, []);
   let dispatch = useDispatch();
-  // @ts-ignore
-  window.SpeechRecognition =
-    // @ts-ignore
-    window.SpeechRecognition || window.webkitSpeechRecognition;
-  // @ts-ignore
-  const recognition = new window.SpeechRecognition();
-  recognition.interimResults = true;
-  recognition.addEventListener("result", (e: any) => {
-    setQuery(e.results[0][0].transcript);
-    setTranscript(e.results[0][0].transcript);
-  });
 
   useEffect(() => {
     if ("speechSynthesis" in window && query && !record) {
@@ -83,16 +89,28 @@ function Home() {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [record]);
-
-  recognition.addEventListener("end", (e: Event) => {
-    setRecord(false);
-  });
+  if (recognition)
+    recognition.addEventListener("end", (e: Event) => {
+      setRecord(false);
+    });
 
   const handleOnRecord = async () => {
     synth.cancel();
-    recognition.stop();
+    if (recognition) recognition.stop();
     setRecord(false);
-    if (navigator.onLine) {
+    if (!recognition) {
+      let speakData = new SpeechSynthesisUtterance();
+      speakData.volume = 100;
+      speakData.pitch = 1.1;
+      speakData.text =
+        "You browser does not support speech recognition yet! Please use Google Chrome";
+
+      speakData.lang = "en";
+      speakData.voice = speechSynthesis.getVoices()
+        ? speechSynthesis.getVoices()[1]
+        : speechSynthesis.getVoices()[0];
+      speechSynthesis.speak(speakData);
+    } else if (navigator.onLine) {
       let click = new Audio(sound);
       click.volume = 0.6;
       click.play();
