@@ -2,16 +2,17 @@ import { Box, Flex } from "@chakra-ui/react";
 import Navbar from "./Navbar/Navbar";
 import Home from "./Home/Home";
 import Conversation from "./Conversations";
-import Notification from "./Notifications";
+import Files from "./Files";
 import { setTab } from "../reducers/navigationSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { AiOutlineHome, AiFillHome } from "react-icons/ai";
 import { BsChatTextFill, BsChatText } from "react-icons/bs";
 import { useEffect } from "react";
-import { IoMdNotifications, IoMdNotificationsOutline } from "react-icons/io";
 import { checkAuth } from "../reducers/authSlice";
+import {userInfo} from "../reducers/userSlice";
 import { RiUserLocationFill, RiUserLocationLine } from "react-icons/ri";
 import { fetchResponses } from "../reducers/speechSplice";
+import {AiFillFolder, AiOutlineFolder} from 'react-icons/ai';
 
 import Signin from "./Signin/index";
 function Index() {
@@ -23,9 +24,9 @@ function Index() {
   let responses = useSelector((state: any) => state.speech.responses);
 
   useEffect(() => {
-    fetch(`${process.env.REACT_APP_SERVER_URL}`);
     dispatch(fetchResponses(responses.length + 10));
     dispatch(checkAuth(null));
+    dispatch(userInfo())
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -35,10 +36,10 @@ function Index() {
     ? [
         {
           index: 0,
-          name: "Notification",
-          component: <Notification />,
-          filled: <IoMdNotifications size={size} color={color} />,
-          icon: <IoMdNotificationsOutline size={size} color={color} />,
+          name: "Files",
+          component: <Files />,
+          filled: <AiFillFolder size={size} color={color} />,
+          icon: <AiOutlineFolder size={size} color={color} />,
         },
         {
           index: 1,
@@ -48,7 +49,6 @@ function Index() {
           icon: <AiOutlineHome size={size} color={color} />,
         },
         {
-          // BsChatTextFill, BsChatText
           index: 2,
           name: "Notes",
           component: <Conversation />,
