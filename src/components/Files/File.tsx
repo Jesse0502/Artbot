@@ -41,8 +41,8 @@ const File = (props: any) => {
         <>
     <Flex justify="space-between" py="6" borderBottom="1px" borderColor='black' px="5" alignItems="center">
         <Flex flexDir="column"  >
-        <Text cursor="pointer" _hover={{"color": "#5e70b0"}} onClick={handleView} fontSize="3xl" noOfLines={1} fontWeight="bold">{file.name} </Text>
-            <Text fontSize="md" fontWeight="light">Type: {file.file_type}; Last Updated: {new Date(file.lastUpdated).toLocaleDateString()}</Text>
+        <Text cursor="pointer" _hover={{"color": "#5e70b0"}} onClick={handleView} fontSize={["xl","3xl"]} noOfLines={1} fontWeight="bold">{file.name} </Text>
+            <Text fontSize={["sm","md"]} fontWeight="light">Type: {file.file_type}; Last Updated: {new Date(file.lastUpdated).toLocaleDateString()}</Text>
         </Flex>
         <Flex alignItems="center">
             <AddFileModal edit={true} data={file}/>

@@ -1,24 +1,12 @@
 import React from "react";
 import { Flex, Text, Avatar } from "@chakra-ui/react";
-// import { FaRobot } from "react-icons/fa";
 import logo from "../../assets/logo.png";
 import TypeAnimation from "react-type-animation";
-// import { BsDot } from "react-icons/bs";
+import {useSelector } from 'react-redux'
 
-// interface responseInterface {}
-
-// interface convTypes {
-//   _id: string;
-//   response: string;
-//   query: string;
-//   response_time: Date;
-//   recieve_time: Date;
-// }
 const Conversation = (props: any) => {
   const conv: any = props.conv;
-  // const idx: number = props.key;
-  // const length: number = props.length
-
+  const session = useSelector ((state: any) => state.speech.session)
   return (
     <Flex flexDir="column-reverse" h="max" mx="5" my="4">
       <Flex mt="7">
@@ -38,14 +26,24 @@ const Conversation = (props: any) => {
                 <Text>Artbot is typing</Text>
                 <TypeAnimation
                   cursor={false}
-                  sequence={[`......`, 100, ""]}
+                  sequence={[`......`, 500, ""]}
                   wrapper="h2"
                   // @ts-ignore
-                  duration={100}
+                  // duration={100}
                   repeat={999}
                 />
               </Flex>
             )}
+            
+          {session && conv.response && conv.response.includes("Sir, I found") && session.type === "email" && (<>
+          <Text fontSize="md" py="2" fontWeight="bold">Current Session</Text>
+          <Flex flexDir="column" maxH="96" overflow="auto">
+            
+          {session.session.map((mail: any, index: number) => (
+            <Text key={index} fontWeight="semibold">{index + 1}. {mail.sender} - {mail.subject} </Text>
+            ))}
+            </Flex>
+          </>)}
           </Text>
         </Flex>
       </Flex>
@@ -66,6 +64,7 @@ const Conversation = (props: any) => {
               Failed to fetch data
             </Text>
           )}
+          
         </Text>
       </Flex>
     </Flex>

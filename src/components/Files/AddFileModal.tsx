@@ -78,9 +78,9 @@ const AddFileModal = (props: any) => {
     </Flex>
     </Button>
   
-        <Modal isOpen={isOpen} onClose={onClose}>
+        <Modal isOpen={isOpen} isCentered  onClose={onClose}>
           <ModalOverlay />
-          <ModalContent>
+          <ModalContent mx={["3","0"]}>
             <ModalHeader>Add File</ModalHeader>
             <ModalCloseButton />
             <ModalBody>

@@ -1,27 +1,26 @@
-import { Box, Center, Text, Spinner } from "@chakra-ui/react";
+import { Box, Center, Spinner, Text } from "@chakra-ui/react";
 import React, { useEffect } from "react";
 import { BsFillMicFill } from "react-icons/bs";
-// @ts-ignore
-import sound from "../../assets/click.wav";
 import { ReactMic } from "react-mic";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchResponse } from "../../reducers/speechSplice";
-import { logout } from "../../reducers/authSlice";
+// @ts-ignore
+import sound from "../../assets/click.wav";
 import OfflineIcon from "../../OfflineIcon";
-import Session from "./Session";
-import { FiLogOut } from "react-icons/fi";
+import { addQuery, fetchResponse } from "../../reducers/speechSplice";
+import Session from "./Session";  
 
 function Home() {
   const [query, setQuery] = React.useState("");
   const [record, setRecord] = React.useState<boolean>(false);
   const [transcript, setTranscript] = React.useState<string>("");
   const [location, setLocation] = React.useState<any>(null);
-  const [session, setSession] = React.useState<any>(null);
   const [loading, setLoading] = React.useState<boolean>(false);
   const [recognition, setRecognition] = React.useState<any>(null);
-  const isAuthenticated = useSelector(
-    (state: any) => state.auth.isAuthenticated
+  
+  const sessionCtx = useSelector(
+    (state: any) => state.speech.session
   );
+  console.log(sessionCtx)
   let synth = window.speechSynthesis;
   useEffect(() => {
     if (navigator.geolocation) {
@@ -57,8 +56,10 @@ function Home() {
     if ("speechSynthesis" in window && query && !record) {
       const respondSpeech = async () => {
         setLoading(true);
+        let uid = Math.random() * 10
+        dispatch(addQuery({ query, uid }));
         let res = await dispatch(
-          fetchResponse({ query, location, uid: Math.random() * 10 })
+          fetchResponse({ query, location, uid })
         );
         console.log(res);
         setLoading(false);
@@ -69,9 +70,7 @@ function Home() {
           a.target = "_blank";
           a.click();
         }
-        if (res.payload.response.session) {
-          setSession(res.payload.response.session);
-        }
+        
         let speakData = new SpeechSynthesisUtterance();
 
         speakData.volume = 100;
@@ -132,10 +131,6 @@ function Home() {
     }
   };
 
-  const handleLogout = () => {
-    dispatch(logout(null));
-  };
-
   return (
     <Center pt="44" overflow={"clip"} flexDir="column">
       <OfflineIcon />
@@ -144,13 +139,9 @@ function Home() {
           <Spinner />
         </Box>
       )}
-      {!session && (
+      {!sessionCtx && (
         <>
-          {isAuthenticated && (
-            <Box pos="absolute" top="4" right="4" onClick={handleLogout}>
-              <FiLogOut size={24} />
-            </Box>
-          )}
+
           <Box
             p="16"
             m="5"
@@ -178,7 +169,7 @@ function Home() {
           </Text>
         </>
       )}
-      {session && <Session session={session} setSession={setSession} />}
+      {sessionCtx && sessionCtx.type === "memes" && <Session session={sessionCtx} />}
     </Center>
   );
 }

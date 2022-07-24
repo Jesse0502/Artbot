@@ -28,8 +28,7 @@ function Index() {
     dispatch(checkAuth(null));
     dispatch(userInfo())
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isAuthenticated, dispatch, responses.length]);
   let size = 32;
   let color = "#5e70b0";
   const tabs = isAuthenticated

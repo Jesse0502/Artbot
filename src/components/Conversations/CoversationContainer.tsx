@@ -29,7 +29,6 @@ const CoversationContainer = (props: propTypes) => {
         // @ts-ignore
         scrollRef.current.clientHeight
     );
-    // setscrollTop(currPos);
     // @ts-ignore
     const clientH = scrollRef.current.scrollHeight;
     if (+currPos + 5 >= +clientH) {
@@ -42,18 +41,10 @@ const CoversationContainer = (props: propTypes) => {
   };
 
   React.useEffect(() => {
-    // const currPos = Math.abs(
-    //   // @ts-ignore
-    //   Math.abs(Math.ceil(scrollTop)) +
-    //     // @ts-ignore
-    //     scrollRef.current.clientHeight
-    // );
-    // // @ts-ignore
-    // const clientH = scrollRef.current.scrollHeight;
-    // if (+currPos >= +clientH) {
+    // @ts-ignore
+    if(scrollRef.current.scrollTop > -135)
     // @ts-ignore
     scrollRef.current.scrollTop = 0;
-    // }
   }, [conversations.length]);
 
   return (

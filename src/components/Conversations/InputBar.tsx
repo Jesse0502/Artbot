@@ -11,15 +11,15 @@ import { RiSendPlane2Fill } from "react-icons/ri";
 import { MdOutlineExpandLess } from "react-icons/md";
 import { BsKeyboard } from "react-icons/bs";
 import { useDispatch } from "react-redux";
-// import {fetchResponse} from '../../'
+import {setTab} from "../../reducers/navigationSlice"
 import { fetchResponse, addQuery } from "../../reducers/speechSplice";
 
 const InputBar = () => {
   const [query, setQuery] = useState("");
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const dispatch = useDispatch();
   const [location, setLocation] = useState<any>(null);
-
+  
   React.useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -41,7 +41,12 @@ const InputBar = () => {
     let uid = Math.random() * 10;
     dispatch(addQuery({ query, uid }));
     let res = await dispatch(fetchResponse({ query, location, uid }));
-    console.log(res);
+
+    if(res.payload.response.hasOwnProperty("session"))
+    if(res.payload.response.session.type === "memes")
+    {
+      dispatch(setTab({index: 1, name: "Home"}))
+    }
   };
   return (
     <form onSubmit={handleSubmit}>

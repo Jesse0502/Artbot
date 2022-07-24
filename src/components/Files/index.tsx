@@ -23,7 +23,7 @@ const Index = () => {
     </Flex>
     <Flex flexDir="column-reverse">
       
-    {files.map((item: any, index: number) => (
+    {files && files.map((item: any, index: number) => (
       <File key={index} file={item} />
       ))}
       </Flex>

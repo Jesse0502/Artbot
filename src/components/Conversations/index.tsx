@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { Flex, Box } from "@chakra-ui/react";
 // import { useDispatch } from "react-redux";
 // import { logout } from "../../reducers/authSlice";
 import ConversationContainer from "./CoversationContainer";
-import { BiVolumeMute } from "react-icons/bi";
+import { BiLogOutCircle } from "react-icons/bi";
 import InputBar from "./InputBar";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../reducers/authSlice";
 // import {fetchResponses} from '../../reducers/speechSplice'
 const Index = () => {
-  // const dispatch = useDispatch();
-  const [speak, setSpeak] = useState(false);
+  const dispatch = useDispatch();
   const responses = useSelector((state: any) => state.speech.responses);
 
   return (
@@ -26,14 +26,14 @@ const Index = () => {
           zIndex={99999}
           pos="absolute"
           top="3"
-          color={speak ? "white" : "black"}
+          bg={"white"}
           right="3"
           p="3"
           rounded="full"
-          bg={speak ? "#5e70b0" : "white"}
-          onClick={() => setSpeak(() => !speak)}
+          onClick={() => dispatch(logout(null)) }
         >
-          <BiVolumeMute size={22} />
+          <BiLogOutCircle size={22} />
+          {/* <BiVolumeMute size={22} /> */}
         </Box>
         <ConversationContainer conversations={responses} />
         <InputBar />

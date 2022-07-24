@@ -17,9 +17,12 @@ import {
 } from "@chakra-ui/react";
 import { FaStepBackward, FaStepForward } from "react-icons/fa";
 import { AiOutlineClose } from "react-icons/ai";
-
+import {useDispatch} from "react-redux"
+import {removeSession} from '../../reducers/speechSplice'
 const Session = (props: any) => {
-  const { session, setSession } = props;
+  const dispatch = useDispatch();
+  let { session } = props;
+  session = session.session
   const [count, setCount] = useState<any>(0);
   const [currentMeme, setCurrentMeme] = useState<any>(session[count].url);
   const [loading, setLoading] = useState<boolean>(false);
@@ -52,17 +55,16 @@ const Session = (props: any) => {
     h: "max",
     shadow: "sm",
     bg: "white",
-    // border: "1px",
-    // borderColor: "black",
   };
   return (
-    <Center flexDir="column" alignItems="center" mt="-5">
+    <Center flexDir="column" alignItems="center" mt={["-5", "-20"]}>
       <Box
         pos="absolute"
         top="4"
         fontWeight="bold"
-        onClick={() => setSession(null)}
+        onClick={() => dispatch(removeSession(null))}
         right="5"
+        cursor="pointer"
       >
         End Session
       </Box>
@@ -71,8 +73,6 @@ const Session = (props: any) => {
         bg="transparent"
         color=""
         isLoading={loading}
-        // _active={{}}
-        // _hover={{}}
         w="96"
         h="80"
       >
