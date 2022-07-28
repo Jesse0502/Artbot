@@ -35,16 +35,16 @@ const CoversationContainer = (props: propTypes) => {
       setLoading(true);
       setTimeout(() => {
         dispatch(fetchResponses(conversations.length + 10));
-        setLoading(false);
-      }, 200);
+        // setLoading(false);
+      }, 1000);
     }
   };
 
   React.useEffect(() => {
     // @ts-ignore
-    if(scrollRef.current.scrollTop > -135)
-    // @ts-ignore
-    scrollRef.current.scrollTop = 0;
+    if (scrollRef.current.scrollTop > -135)
+      // @ts-ignore
+      scrollRef.current.scrollTop = 0;
   }, [conversations.length]);
 
   return (
@@ -75,7 +75,7 @@ const CoversationContainer = (props: propTypes) => {
           <Conversation length={conversations.length} conv={conv} key={idx} />
         ))}
         {loading && (
-          <Center my="5">
+          <Center my="10">
             <Flex mx="3">Fetching conversations</Flex>
             <CircularProgress
               color="#5e70b0"

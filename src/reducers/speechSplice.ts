@@ -51,7 +51,12 @@ export const fetchResponses: any = createAsyncThunk(
 
 const speechSlice = createSlice({
   name: "speech",
-  initialState: { response: "", responses: [], session: null },
+  initialState: {
+    response: "",
+    // @ts-ignore
+    responses: [],
+    session: null,
+  },
   reducers: {
     addQuery: (state: any, action: any) => {
       state.responses.unshift({
@@ -80,16 +85,20 @@ const speechSlice = createSlice({
         }
         return resp;
       });
-      if(action.payload.response.hasOwnProperty("session"))
-        state.session = action.payload.response.session
-      
+      if (action.payload.response.hasOwnProperty("session"))
+        state.session = action.payload.response.session;
+
       state.responses = newResp;
     });
     builder.addCase(fetchResponses.fulfilled, (state: any, action: any) => {
       state.responses = action.payload.response.data;
+      localStorage.setItem(
+        "responses",
+        JSON.stringify(action.payload.response.data)
+      );
     });
   },
 });
 
-export const { addQuery,removeSession } = speechSlice.actions;
+export const { addQuery, removeSession } = speechSlice.actions;
 export default speechSlice.reducer;

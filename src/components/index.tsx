@@ -9,10 +9,10 @@ import { AiOutlineHome, AiFillHome } from "react-icons/ai";
 import { BsChatTextFill, BsChatText } from "react-icons/bs";
 import { useEffect } from "react";
 import { checkAuth } from "../reducers/authSlice";
-import {userInfo} from "../reducers/userSlice";
+import { userInfo } from "../reducers/userSlice";
 import { RiUserLocationFill, RiUserLocationLine } from "react-icons/ri";
 import { fetchResponses } from "../reducers/speechSplice";
-import {AiFillFolder, AiOutlineFolder} from 'react-icons/ai';
+import { AiFillFolder, AiOutlineFolder } from "react-icons/ai";
 
 import Signin from "./Signin/index";
 function Index() {
@@ -26,9 +26,9 @@ function Index() {
   useEffect(() => {
     dispatch(fetchResponses(responses.length + 10));
     dispatch(checkAuth(null));
-    dispatch(userInfo())
-
-  }, [isAuthenticated, dispatch, responses.length]);
+    dispatch(userInfo());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAuthenticated]);
   let size = 32;
   let color = "#5e70b0";
   const tabs = isAuthenticated
