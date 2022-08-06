@@ -41,7 +41,15 @@ const InputBar = () => {
     let uid = Math.random() * 10;
     dispatch(addQuery({ query, uid }));
     let res = await dispatch(fetchResponse({ query, location, uid }));
-
+    
+    console.log(res.payload.response)
+    
+    if (res.payload.response.link) {
+      let a = document.createElement("a");
+      a.href = res.payload.response.link;
+      a.target = "_blank";
+      a.click();
+    }
     if(res.payload.response.hasOwnProperty("session"))
     if(res.payload.response.session.type === "memes")
     {
@@ -64,7 +72,6 @@ const InputBar = () => {
             <BsKeyboard size={24} />
           ) : (
             <Flex alignItems="center" flexDir="column">
-              {/* <BsKeyboard size={24}/> */}
               <MdOutlineExpandLess size={24} />
             </Flex>
           )}

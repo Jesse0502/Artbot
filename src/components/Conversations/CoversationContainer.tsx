@@ -20,7 +20,6 @@ const CoversationContainer = (props: propTypes) => {
   const dispatch = useDispatch();
   const [loading, setLoading] = React.useState(false);
   const scrollRef = React.useRef();
-  // const [scrollTop, setscrollTop] = React.useState(0);
 
   const handleScroll = (e: any) => {
     const currPos = Math.abs(
@@ -35,7 +34,6 @@ const CoversationContainer = (props: propTypes) => {
       setLoading(true);
       setTimeout(() => {
         dispatch(fetchResponses(conversations.length + 10));
-        // setLoading(false);
       }, 1000);
     }
   };
@@ -66,7 +64,6 @@ const CoversationContainer = (props: propTypes) => {
             width: "6px",
           },
           "&::-webkit-scrollbar-thumb": {
-            // borderColor: "red",
             borderRadius: "24px",
           },
         }}
