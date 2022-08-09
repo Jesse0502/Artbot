@@ -3,14 +3,14 @@ import React, { useEffect } from "react";
 import { BsFillMicFill } from "react-icons/bs";
 import { ReactMic } from "react-mic";
 import { useDispatch, useSelector } from "react-redux";
-// @ts-ignore
-import sound from "../../assets/click.wav";
 import OfflineIcon from "../../OfflineIcon";
 import { addQuery, fetchResponse } from "../../reducers/speechSplice";
-import Session from "./Session";  
+import Session from "./Session";
+// @ts-ignore
+import sound from "../../assets/click.wav";
 
 function Home() {
-  const [query, setQuery] = React.useState("");
+  const [query, setQuery] = React.useState<string>("");
   const [record, setRecord] = React.useState<boolean>(false);
   const [transcript, setTranscript] = React.useState<string>("");
   const [location, setLocation] = React.useState<any>(null);
@@ -20,8 +20,9 @@ function Home() {
   const sessionCtx = useSelector(
     (state: any) => state.speech.session
   );
-  console.log(sessionCtx)
+
   let synth = window.speechSynthesis;
+  
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -50,6 +51,7 @@ function Home() {
       });
     }
   }, []);
+  
   let dispatch = useDispatch();
 
   useEffect(() => {
@@ -83,9 +85,7 @@ function Home() {
       };
       respondSpeech();
     }
-    return () => {
-      setQuery("");
-    };
+    return () => setQuery("");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [record]);
   if (recognition)
@@ -98,36 +98,36 @@ function Home() {
     if (recognition) recognition.stop();
     setRecord(false);
     if (!recognition) {
-      let speakData = new SpeechSynthesisUtterance();
-      speakData.volume = 100;
-      speakData.pitch = 1.1;
-      speakData.text =
-        "You browser does not support speech recognition yet! Please use Google Chrome";
+        let speakData = new SpeechSynthesisUtterance();
+        speakData.volume = 100;
+        speakData.pitch = 1.1;
+        speakData.text =
+          "You browser does not support speech recognition yet! Please use Google Chrome";
 
-      speakData.lang = "en";
-      speakData.voice = speechSynthesis.getVoices()
-        ? speechSynthesis.getVoices()[1]
-        : speechSynthesis.getVoices()[0];
-      speechSynthesis.speak(speakData);
+        speakData.lang = "en";
+        speakData.voice = speechSynthesis.getVoices()
+          ? speechSynthesis.getVoices()[1]
+          : speechSynthesis.getVoices()[0];
+        speechSynthesis.speak(speakData);
     } else if (navigator.onLine) {
-      let click = new Audio(sound);
-      click.volume = 0.6;
-      click.play();
-      recognition.start();
-      setRecord(true);
+        let click = new Audio(sound);
+        click.volume = 0.6;
+        click.play();
+        recognition.start();
+        setRecord(true);
     } else {
-      navigator.vibrate(400);
-      let speakData = new SpeechSynthesisUtterance();
-      speakData.volume = 100;
-      speakData.pitch = 1.1;
-      speakData.text =
-        "You are currently offline, please connect to the internet!";
+        navigator.vibrate(400);
+        let speakData = new SpeechSynthesisUtterance();
+        speakData.volume = 100;
+        speakData.pitch = 1.1;
+        speakData.text =
+          "You are currently offline, please connect to the internet!";
 
-      speakData.lang = "en";
-      speakData.voice = speechSynthesis.getVoices()
-        ? speechSynthesis.getVoices()[1]
-        : speechSynthesis.getVoices()[0];
-      speechSynthesis.speak(speakData);
+        speakData.lang = "en";
+        speakData.voice = speechSynthesis.getVoices()
+          ? speechSynthesis.getVoices()[1]
+          : speechSynthesis.getVoices()[0];
+        speechSynthesis.speak(speakData);
     }
   };
 

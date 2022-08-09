@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const uploadFile: any = createAsyncThunk(
@@ -71,7 +71,7 @@ const userSlice = createSlice({
   initialState: {
     userInfo: {},
     // @ts-ignore
-    uploads: JSON.parse(localStorage.getItem("uploads")),
+    uploads: JSON.parse(JSON.stringify(localStorage.getItem("uploads"))) || null,
   },
   reducers: {},
   extraReducers: (builder) => {

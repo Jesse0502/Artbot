@@ -17,8 +17,9 @@ import { fetchResponse, addQuery } from "../../reducers/speechSplice";
 const InputBar = () => {
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
-  const dispatch = useDispatch();
   const [location, setLocation] = useState<any>(null);
+  
+  const dispatch = useDispatch();
   
   React.useEffect(() => {
     if (navigator.geolocation) {
@@ -42,8 +43,6 @@ const InputBar = () => {
     dispatch(addQuery({ query, uid }));
     let res = await dispatch(fetchResponse({ query, location, uid }));
     
-    console.log(res.payload.response)
-    
     if (res.payload.response.link) {
       let a = document.createElement("a");
       a.href = res.payload.response.link;
@@ -52,9 +51,7 @@ const InputBar = () => {
     }
     if(res.payload.response.hasOwnProperty("session"))
     if(res.payload.response.session.type === "memes")
-    {
       dispatch(setTab({index: 1, name: "Home"}))
-    }
   };
   return (
     <form onSubmit={handleSubmit}>
