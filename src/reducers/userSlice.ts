@@ -71,7 +71,7 @@ const userSlice = createSlice({
   initialState: {
     userInfo: {},
     // @ts-ignore
-    uploads: JSON.parse(JSON.stringify(localStorage.getItem("uploads"))) || null,
+    uploads: JSON.parse(JSON.stringify(localStorage.getItem("uploads"))) || [],
   },
   reducers: {},
   extraReducers: (builder) => {

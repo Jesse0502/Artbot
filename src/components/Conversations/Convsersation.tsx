@@ -1,8 +1,7 @@
-import React from "react";
-import { Flex, Text, Avatar } from "@chakra-ui/react";
-import logo from "../../assets/logo.png";
+import { Avatar, Flex, Text } from "@chakra-ui/react";
+import { useSelector } from 'react-redux';
 import TypeAnimation from "react-type-animation";
-import {useSelector } from 'react-redux'
+import logo from "../../assets/logo.png";
 
 const Conversation = (props: any) => {
   const conv: any = props.conv;
@@ -16,9 +15,6 @@ const Conversation = (props: any) => {
             <Text ml="3" fontWeight="bold" fontSize={20}>
               Artbot
             </Text>
-            {/* <BsDot /> */}
-            {/* <Text>{new Date(conv.response_time).toLocaleTimeString()}</Text> */}
-            {/* <FaRobot color="gray" size={20} /> */}
           </Flex>
           <Text ml="3">
             {conv.response ?? (

@@ -50,7 +50,7 @@ const AddFileModal = (props: any) => {
 
           toast({
             title: 'Failed to Upload File.',
-            description: "Please try with a Image/Pdf/Audio/Video File",
+            description: "Please try with an Image or Pdf File",
             status: 'error',
             position:"bottom-right",
             duration: 4000,

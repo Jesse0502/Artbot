@@ -17,7 +17,7 @@ const Index = () => {
       <Flex
         flexDir="column"
         fontFamily="body"
-        h={["87vh", "83vh"]}
+        h={["86vh", "83vh"]}
         overflow="auto"
         pos="relative"
       >
@@ -30,7 +30,7 @@ const Index = () => {
           right="3"
           p="3"
           rounded="full"
-          onClick={() => dispatch(logout(null)) }
+          onClick={() => dispatch(logout(null))}
         >
           <BiLogOutCircle size={22} />
           {/* <BiVolumeMute size={22} /> */}
