@@ -13,8 +13,9 @@ import { userInfo } from "../reducers/userSlice";
 import { RiUserLocationFill, RiUserLocationLine } from "react-icons/ri";
 import { fetchResponses } from "../reducers/speechSplice";
 import { AiFillFolder, AiOutlineFolder } from "react-icons/ai";
-
+import "./index.css"
 import Signin from "./Signin/index";
+
 function Index() {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector(
