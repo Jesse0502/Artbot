@@ -13,9 +13,10 @@ import { userInfo } from "../reducers/userSlice";
 import { RiUserLocationFill, RiUserLocationLine } from "react-icons/ri";
 import { fetchResponses } from "../reducers/speechSplice";
 import { AiFillFolder, AiOutlineFolder } from "react-icons/ai";
-import "./index.css"
+import "./index.css";
 import Signin from "./Signin/index";
-
+import Push from "push.js";
+import Logo from "../assets/logo.png";
 function Index() {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector(
@@ -25,6 +26,12 @@ function Index() {
   let responses = useSelector((state: any) => state.speech.responses);
 
   useEffect(() => {
+    isAuthenticated &&
+      Push.create("You're authenticated!", {
+        body: "You're officially in the game now",
+        icon: Logo,
+        vibrate: true,
+      });
     dispatch(fetchResponses(responses.length + 10));
     dispatch(checkAuth(null));
     dispatch(userInfo());
