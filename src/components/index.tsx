@@ -27,8 +27,8 @@ function Index() {
 
   useEffect(() => {
     isAuthenticated &&
-      Push.create("You're authenticated!", {
-        body: "You're officially in the game now",
+      Push.create("Welcome back!", {
+        body: "What would you like me to do?",
         icon: Logo,
         vibrate: true,
       });
