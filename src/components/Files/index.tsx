@@ -22,7 +22,7 @@ const Index = () => {
         </Text>
         <AddFileModal edit={false} data={null} />
       </Flex>
-      <Flex flexDir="column-reverse">
+      <Flex flexDir="column-reverse" h={["72vh", "67vh"]} overflow={"auto"}>
         {files &&
           files.map((item: any, index: number) => (
             <File key={index} file={item} />

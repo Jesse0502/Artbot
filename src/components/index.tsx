@@ -26,12 +26,12 @@ function Index() {
   let responses = useSelector((state: any) => state.speech.responses);
 
   useEffect(() => {
-    isAuthenticated &&
-      Push.create("Welcome back!", {
-        body: "What would you like me to do?",
-        icon: Logo,
-        vibrate: true,
-      });
+    // isAuthenticated &&
+    //   Push.create("Welcome back!", {
+    //     body: "What would you like me to do?",
+    //     icon: Logo,
+    //     vibrate: true,
+    //   });
     dispatch(fetchResponses(responses.length + 10));
     dispatch(checkAuth(null));
     dispatch(userInfo());
