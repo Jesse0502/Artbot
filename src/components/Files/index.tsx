@@ -18,7 +18,7 @@ const Index = () => {
     <Box p="3">
       <Flex alignItems="center" px="3" mb="5" justify="space-between">
         <Text fontWeight="bold" fontSize="40">
-          Files
+          Storage
         </Text>
         <AddFileModal edit={false} data={null} />
       </Flex>
