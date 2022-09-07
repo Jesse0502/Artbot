@@ -23,8 +23,8 @@ function Index() {
   const isAuthenticated = useSelector(
     (state: any) => state.auth.isAuthenticated
   );
-  let currTab = useSelector((state: any) => state.nav.tab);
   let responses = useSelector((state: any) => state.speech.responses);
+  let currTab = useSelector((state: any) => state.nav.tab);
 
   useEffect(() => {
     isAuthenticated &&
