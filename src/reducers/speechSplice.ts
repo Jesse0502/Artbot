@@ -7,14 +7,20 @@ export const fetchResponse: any = createAsyncThunk(
     let query = args.query;
     let location = args.location;
     let uid = args.uid;
-    const response = await fetch(
-      `${process.env.REACT_APP_API_ROOT}/speech?speech=${query}&loc=${
-        location?.lat
-      },${location?.lng}&token=${localStorage.getItem("art-token")}`
-    )
+
+    const response = await axios
+      .post(
+        `${process.env.REACT_APP_API_ROOT}/speech/?speech=${query}&loc=${location?.lat},${location?.lng}`,
+        {},
+        {
+          headers: {
+            Authorization: "token " + localStorage.getItem("art-token"),
+          },
+        }
+      )
       .then(async (res) => {
-        if (res.ok) {
-          return res.json();
+        if (res.status === 200) {
+          return res.data;
         } else {
           return {
             msg: "Some unexpected error occured!",
