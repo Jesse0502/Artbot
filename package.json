@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@bubblewrap/cli": "^1.18.1",
+    "@bubblewrap/core": "^1.18.1",
+    "@bubblewrap/validator": "^1.18.1",
     "@chakra-ui/react": "^2.2.1",
     "@emotion/react": "^11.0.0",
     "@emotion/styled": "^11.0.0",
