@@ -10,13 +10,19 @@ import { BsChatTextFill, BsChatText } from "react-icons/bs";
 import { useEffect } from "react";
 import { checkAuth } from "../reducers/authSlice";
 import { userInfo } from "../reducers/userSlice";
-import { RiUserLocationFill, RiUserLocationLine } from "react-icons/ri";
+import {
+  RiNotification2Fill,
+  RiNotification2Line,
+  RiUserLocationFill,
+  RiUserLocationLine,
+} from "react-icons/ri";
 import { fetchResponses } from "../reducers/speechSplice";
 import { AiFillFolder, AiOutlineFolder } from "react-icons/ai";
 import "./index.css";
 import Signin from "./Signin/index";
 import Push from "push.js";
 import Logo from "../assets/logo.png";
+import Notifications from "./Notifications/Notifications";
 
 function Index() {
   const dispatch = useDispatch();
@@ -62,6 +68,13 @@ function Index() {
           component: <Conversation />,
           filled: <BsChatTextFill size={size - 8} color={color} />,
           icon: <BsChatText size={size - 8} color={color} />,
+        },
+        {
+          index: 3,
+          name: "Notifications",
+          component: <Notifications />,
+          filled: <RiNotification2Fill size={size - 8} color={color} />,
+          icon: <RiNotification2Line size={size - 8} color={color} />,
         },
       ]
     : [
