@@ -69,7 +69,7 @@ export const getUploads: any = createAsyncThunk(
 const userSlice = createSlice({
   name: "user",
   initialState: {
-    userInfo: {},
+    userInfo: { notifications: [] },
     // @ts-ignore
     uploads: [],
   },
