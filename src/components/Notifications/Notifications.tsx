@@ -2,17 +2,17 @@ import { Box, Center, Flex, Heading, Image, Text } from "@chakra-ui/react";
 import { useSelector } from "react-redux";
 import Logo from "../../assets/logo.png";
 const Notifications = () => {
-  const notifications = useSelector(
+  const notifications: any[] = useSelector(
     (state: any) => state.user.userInfo.notifications
   );
   return (
     <Box p="5">
       <Heading>Notifications</Heading>
-      <Flex flexDir="column" mt="10">
+      <Flex flexDir="column-reverse" mt="10">
         {notifications.length > 0 ? (
           notifications.map((i: any) => (
             <Flex
-              borderY="1px"
+              borderTop="1px"
               alignItems={"center"}
               p="4"
               cursor={"pointer"}
@@ -24,6 +24,7 @@ const Notifications = () => {
                   {i.type}
                 </Text>
                 <Text>{i.message}</Text>
+                {i.html && <div dangerouslySetInnerHTML={i.html} />}
               </Flex>
             </Flex>
           ))
