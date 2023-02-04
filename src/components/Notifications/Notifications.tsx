@@ -8,7 +8,7 @@ const Notifications = () => {
   return (
     <Box p="5">
       <Heading>Notifications</Heading>
-      <Flex flexDir="column-reverse" mt="10" h="76vh" overflow="auto">
+      <Flex flexDir="column-reverse" mt="10" h="70vh" overflow="auto">
         {notifications.length > 0 ? (
           notifications.map((i: any) => (
             <Flex
