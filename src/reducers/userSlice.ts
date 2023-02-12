@@ -73,7 +73,11 @@ const userSlice = createSlice({
     // @ts-ignore
     uploads: [],
   },
-  reducers: {},
+  reducers: {
+    setNotifications(state, payload) {
+      state.userInfo.notifications = payload.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(uploadFile.fulfilled, (state: any, action) => {
       state.uploads.unshift(action.payload.data);
@@ -92,4 +96,5 @@ const userSlice = createSlice({
   },
 });
 
+export const { setNotifications } = userSlice.actions;
 export default userSlice.reducer;

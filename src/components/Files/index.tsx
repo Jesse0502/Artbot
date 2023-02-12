@@ -22,11 +22,14 @@ const Index = () => {
         </Text>
         <AddFileModal edit={false} data={null} />
       </Flex>
-      <Flex flexDir="column-reverse" h={["72vh", "67vh"]} overflow={"auto"}>
+      <Flex flexDir="column" h="67vh" overflow={"auto"}>
+        {console.log(files)}
         {files &&
-          files.map((item: any, index: number) => (
-            <File key={index} file={item} />
-          ))}
+          [...files]
+            .reverse()
+            .map((item: any, index: number) => (
+              <File key={index} file={item} />
+            ))}
       </Flex>
     </Box>
   );
