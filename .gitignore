@@ -8,32 +8,29 @@
 # testing
 /coverage
 
+# next.js
+/.next/
+/out/
+
 # production
 /build
 
 # misc
 .DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+*.pem
+
+# debug
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-app-release-bundle.aab
-.env
-.gradle
-app
-gradle
-android.keystore
-build.gradle
-gradle.properties
-gradlew
-gradlew.bat
-manifest-checksum.txt
-settings.gradle
-store_icon.png
-twa-manifest.json
-app-release-signed.apk
-app-release-signed.apk.idsig
-app-release-unsigned-aligned.apk
+.pnpm-debug.log*
+
+# local env files
+.env*.local
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
