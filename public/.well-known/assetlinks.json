@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.artbot.app",
+      "sha256_cert_fingerprints": [
+        "43:F5:B8:E9:71:24:E7:18:E5:86:BF:80:DF:F9:5D:C8:44:75:1B:4E:18:B5:02:CE:8E:3F:4A:C2:D2:78:2D:C4"
+      ]
+    }
+  }
+]
