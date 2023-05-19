@@ -1,4 +1,4 @@
-import { Avatar, Box, Flex, Image, Text } from "@chakra-ui/react";
+import { Avatar, Box, Flex,  Text } from "@chakra-ui/react";
 import { useSelector } from 'react-redux';
 import TypeAnimation from "react-type-animation";
 import logo from "../../assets/logo.png";
