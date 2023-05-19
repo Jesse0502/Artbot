@@ -1,11 +1,13 @@
-import { Avatar, Flex, Text } from "@chakra-ui/react";
+import { Avatar, Box, Flex, Image, Text } from "@chakra-ui/react";
 import { useSelector } from 'react-redux';
 import TypeAnimation from "react-type-animation";
 import logo from "../../assets/logo.png";
 
+
 const Conversation = (props: any) => {
   const conv: any = props.conv;
-  const session = useSelector ((state: any) => state.speech.session)
+  const session = useSelector ((state: any) => state.speech.session)   
+  
   return (
     <Flex flexDir="column-reverse" h="max" mx="5" my="4">
       <Flex mt="7">
@@ -17,7 +19,7 @@ const Conversation = (props: any) => {
             </Text>
           </Flex>
           <Text ml="3">
-            {conv.response ?? (
+            {!conv.response ? (
               <Flex fontStyle="italic" opacity="0.5">
                 <Text>Artbot is typing</Text>
                 <TypeAnimation
@@ -29,6 +31,11 @@ const Conversation = (props: any) => {
                   repeat={999}
                 />
               </Flex>
+            ) : (
+              <Box dangerouslySetInnerHTML={{__html: conv.response}}>
+                
+                {/* {ReactHtmlParser(parseText(conv.response))} */}
+              </Box>
             )}
             
           {session && conv.response && conv.response.includes("Sir, I found") && session.type === "email" && (<>
