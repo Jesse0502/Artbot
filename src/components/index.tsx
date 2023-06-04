@@ -7,12 +7,12 @@ import { setTab } from "../reducers/navigationSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { AiOutlineHome, AiFillHome } from "react-icons/ai";
 import { BsChatTextFill, BsChatText } from "react-icons/bs";
+import { BiPaint } from 'react-icons/bi';
+import { FaPaintBrush } from 'react-icons/fa';
 import { useEffect } from "react";
 import { checkAuth } from "../reducers/authSlice";
 import { userInfo } from "../reducers/userSlice";
 import {
-  RiNotification2Fill,
-  RiNotification2Line,
   RiUserLocationFill,
   RiUserLocationLine,
 } from "react-icons/ri";
@@ -22,7 +22,7 @@ import "./index.css";
 import Signin from "./Signin/index";
 import Push from "push.js";
 import Logo from "../assets/logo.png";
-import Notifications from "./Notifications/Notifications";
+import Art from "./Art/Art";
 
 function Index() {
   const dispatch = useDispatch();
@@ -71,10 +71,10 @@ function Index() {
         },
         {
           index: 3,
-          name: "Notifications",
-          component: <Notifications />,
-          filled: <RiNotification2Fill size={size - 8} color={color} />,
-          icon: <RiNotification2Line size={size - 8} color={color} />,
+          name: "Art",
+          component: <Art />,
+          filled: <FaPaintBrush size={size - 8} color={color} />,
+          icon: <BiPaint size={size - 4} color={color} />,
         },
       ]
     : [
